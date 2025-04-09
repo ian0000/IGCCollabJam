@@ -5,15 +5,6 @@ using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
-    //just to set some objects
-    // each enemy stats will be randomized on spawn
-    private class EnemyStats
-    {
-        public GameObject _enemyPrefab;
-        public int hp;
-        public int atk;
-    }
-
     //to know what will be the max values for each enemy spawned
 
     [System.Serializable]
@@ -43,30 +34,18 @@ public class EnemySpawn : MonoBehaviour
     //variables im going to set here
     private GridManager _gridManager;
     private Dictionary<Vector2, Tile> _tiles;
-    private GameManager _gameManager;
-    IEnumerator Start()
-    {
-        // as i cant set this on start i should wait till the gridmanager is set 
-        // i can create a manager thatll define everythinh on start in an order but later on
-        while (_gridManager == null)
-        {
+
+    void Start() {
+        StartCoroutine(SetupReferences());
+    }
+
+    IEnumerator SetupReferences() {
+        while (_gridManager == null) {
             _gridManager = FindObjectOfType<GridManager>();
             yield return null;
         }
-        while (_gameManager == null)
-        {
-            _gameManager = FindObjectOfType<GameManager>();
-            yield return null;
-        }
-        Debug.Log("es");
+
         _tiles = _gridManager.GetTiles();
-        SpawnEnemies();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     List<Tile> GetBottomRowTiles()
@@ -78,35 +57,35 @@ public class EnemySpawn : MonoBehaviour
                 .ToList();
     }
 
-    void SpawnEnemies()
-    {
+    public void SpawnEnemiesForTurn(int turn) {
+        if (_tiles == null || _tiles.Count == 0) {
+            _tiles = _gridManager.GetTiles();
+        }
+
+        if (enemiesPerTurns.Length <= turn) {
+            Debug.LogWarning("No enemy data for this turn.");
+            return;
+        }
+
         var bottomTiles = GetBottomRowTiles();
-        if (enemiesPerTurns.Length == 0) return;
-        var turn = _gameManager.currentTurn;
         var enemyGroup = enemiesPerTurns[turn];
         var enemyTypes = enemyGroup.Enemy;
 
         int tileIndex = 0;
 
-        foreach (var enemyItem in enemyTypes)
-        {
-            for (int i = 0; i < enemyItem._unitMaxCount; i++)
-            {
-                if (tileIndex >= bottomTiles.Count)
-                {
+        foreach (var enemyItem in enemyTypes) {
+            for (int i = 0; i < enemyItem._unitMaxCount; i++) {
+                if (tileIndex >= bottomTiles.Count) {
                     Debug.LogWarning("Not enough bottom tiles to spawn all enemies.");
                     return;
                 }
-                var tile = bottomTiles[tileIndex];
-                tileIndex++;
 
-                // Randomize stats
+                var tile = bottomTiles[tileIndex++];
                 int hp = Random.Range(1, enemyItem._unitMaxHP + 1);
                 int atk = Random.Range(1, enemyItem._unitMaxATK + 1);
 
-                // Instantiate enemy
                 var enemyGO = Instantiate(enemyItem._unitObject, tile.transform.position, Quaternion.identity);
-                enemyGO.name = $"Enemy {enemyGO.name} ({hp}HP / {atk}ATK)";
+                enemyGO.name = $"Enemy ({hp}HP / {atk}ATK)";
                 Debug.Log(enemyGO.name);
             }
         }

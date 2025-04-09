@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public GameState GameState;
     public int currentTurn = 0;
 
+    public EnemySpawn enemySpawner; // Drag and drop this in the Inspector
+
     void Awake()
     {
         Instance = this;
@@ -17,26 +19,42 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        if (enemySpawner == null) {
+            enemySpawner = FindObjectOfType<EnemySpawn>();
+        }
+
         ChangeState(GameState.PlayerDrawCards);
     }
 
     public void ChangeState(GameState newState)
     {
         GameState = newState;
-        switch (newState)
-        {
+        switch (newState) {
             case GameState.PlayerDrawCards:
+                Debug.Log("Player draws cards.");
                 break;
+
             case GameState.EnemySpawnUnits:
+                Debug.Log("Spawning enemies for turn " + currentTurn);
+                enemySpawner.SpawnEnemiesForTurn(currentTurn);
                 break;
+
             case GameState.PlayerTurn:
+                Debug.Log("Player's turn begins.");
                 break;
+
             case GameState.EnemyTurn:
+                Debug.Log("Enemy's turn begins.");
                 break;
+
             case GameState.Victory:
+                Debug.Log("Player wins!");
                 break;
+
             case GameState.Lose:
+                Debug.Log("Player loses.");
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
