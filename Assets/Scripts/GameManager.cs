@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public int currentTurn = 0;
 
     public EnemySpawn enemySpawner; // Drag and drop this in the Inspector
+    public Hand hand;
 
     void Awake()
     {
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
         switch (newState) {
             case GameState.PlayerDrawCards:
                 Debug.Log("Player draws cards.");
+                hand.DrawCards();
                 break;
 
             case GameState.EnemySpawnUnits:

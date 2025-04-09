@@ -23,7 +23,7 @@ public class GridManager : MonoBehaviour
         {
             for (int y = 0; y < _height; y++)
             {
-                var spawnedTile = Instantiate(_tilePrefab, new Vector3(x, y), Quaternion.identity);
+                var spawnedTile = Instantiate(_tilePrefab, new Vector3(x, y), Quaternion.identity, transform);
                 spawnedTile.name = $"Tile {x} {y}";
 
                 //offset tile colors
@@ -39,9 +39,12 @@ public class GridManager : MonoBehaviour
 
     public Tile GetTileAtPosition(Vector2 pos)
     {
-        if (_tiles.TryGetValue(pos, out var tile))
+        foreach (var tile in _tiles.Values)
         {
-            return tile;
+            if (tile.boxCollider.bounds.Contains(pos))
+            {
+                return tile;
+            }
         }
 
         return null;
