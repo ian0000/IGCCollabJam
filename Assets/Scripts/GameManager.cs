@@ -4,24 +4,26 @@ using UnityEngine;
 using System;
 using UnityEngine.XR;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
     public static GameManager Instance;
     public GameState GameState;
+    public int currentTurn = 0;
 
-    void Awake() 
+    void Awake()
     {
         Instance = this;
     }
 
-    void Start() 
+    void Start()
     {
         ChangeState(GameState.PlayerDrawCards);
     }
 
-    public void ChangeState(GameState newState) 
+    public void ChangeState(GameState newState)
     {
         GameState = newState;
-        switch (newState) 
+        switch (newState)
         {
             case GameState.PlayerDrawCards:
                 break;
@@ -41,7 +43,7 @@ public class GameManager : MonoBehaviour {
     }
 }
 
-public enum GameState 
+public enum GameState
 {
     PlayerDrawCards = 0,
     EnemySpawnUnits = 1,
