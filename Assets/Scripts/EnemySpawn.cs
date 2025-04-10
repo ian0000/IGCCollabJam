@@ -32,24 +32,15 @@ public class EnemySpawn : MonoBehaviour
     public EnemiesPerTurn[] enemiesPerTurns;
 
     //variables im going to set here
-    private GridManager _gridManager;
+    [SerializeField] private GridManager _gridManager;
     private Dictionary<Vector2, Tile> _tiles;
 
     void Start()
     {
-        StartCoroutine(SetupReferences());
+
     }
 
-    IEnumerator SetupReferences()
-    {
-        while (_gridManager == null)
-        {
-            _gridManager = FindObjectOfType<GridManager>();
-            yield return null;
-        }
 
-        _tiles = _gridManager.GetTiles();
-    }
 
     List<Tile> GetBottomRowTiles()
     {
@@ -72,7 +63,7 @@ public class EnemySpawn : MonoBehaviour
             Debug.LogWarning("No enemy data for this turn.");
             return;
         }
-
+        Debug.Log("Tile count" + _tiles.Count());
         var bottomTiles = GetBottomRowTiles();
         var enemyGroup = enemiesPerTurns[turn];
         var enemyTypes = enemyGroup.Enemy;

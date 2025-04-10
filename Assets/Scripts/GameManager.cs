@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
             enemySpawner = FindObjectOfType<EnemySpawn>();
         }
 
-        ChangeState(GameState.PlayerDrawCards);
+        ChangeState(GameState.EnemySpawnUnits);
     }
 
     public void ChangeState(GameState newState)
