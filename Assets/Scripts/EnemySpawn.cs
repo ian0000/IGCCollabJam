@@ -35,12 +35,15 @@ public class EnemySpawn : MonoBehaviour
     private GridManager _gridManager;
     private Dictionary<Vector2, Tile> _tiles;
 
-    void Start() {
+    void Start()
+    {
         StartCoroutine(SetupReferences());
     }
 
-    IEnumerator SetupReferences() {
-        while (_gridManager == null) {
+    IEnumerator SetupReferences()
+    {
+        while (_gridManager == null)
+        {
             _gridManager = FindObjectOfType<GridManager>();
             yield return null;
         }
@@ -57,12 +60,15 @@ public class EnemySpawn : MonoBehaviour
                 .ToList();
     }
 
-    public void SpawnEnemiesForTurn(int turn) {
-        if (_tiles == null || _tiles.Count == 0) {
+    public void SpawnEnemiesForTurn(int turn)
+    {
+        if (_tiles == null || _tiles.Count == 0)
+        {
             _tiles = _gridManager.GetTiles();
         }
 
-        if (enemiesPerTurns.Length <= turn) {
+        if (enemiesPerTurns.Length <= turn)
+        {
             Debug.LogWarning("No enemy data for this turn.");
             return;
         }
@@ -73,9 +79,12 @@ public class EnemySpawn : MonoBehaviour
 
         int tileIndex = 0;
 
-        foreach (var enemyItem in enemyTypes) {
-            for (int i = 0; i < enemyItem._unitMaxCount; i++) {
-                if (tileIndex >= bottomTiles.Count) {
+        foreach (var enemyItem in enemyTypes)
+        {
+            for (int i = 0; i < enemyItem._unitMaxCount; i++)
+            {
+                if (tileIndex >= bottomTiles.Count)
+                {
                     Debug.LogWarning("Not enough bottom tiles to spawn all enemies.");
                     return;
                 }
@@ -85,6 +94,7 @@ public class EnemySpawn : MonoBehaviour
                 int atk = Random.Range(1, enemyItem._unitMaxATK + 1);
 
                 var enemyGO = Instantiate(enemyItem._unitObject, tile.transform.position, Quaternion.identity);
+                enemyGO.GetComponent<SpriteRenderer>().sortingOrder = 1;
                 enemyGO.name = $"Enemy ({hp}HP / {atk}ATK)";
                 Debug.Log(enemyGO.name);
             }

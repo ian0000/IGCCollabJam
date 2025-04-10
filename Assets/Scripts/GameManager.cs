@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEngine.XR;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,7 +19,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (enemySpawner == null) {
+        if (enemySpawner == null)
+        {
             enemySpawner = FindObjectOfType<EnemySpawn>();
         }
 
@@ -30,7 +30,8 @@ public class GameManager : MonoBehaviour
     public void ChangeState(GameState newState)
     {
         GameState = newState;
-        switch (newState) {
+        switch (newState)
+        {
             case GameState.PlayerDrawCards:
                 Debug.Log("Player draws cards.");
                 hand.DrawCards();
