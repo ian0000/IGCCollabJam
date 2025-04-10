@@ -183,8 +183,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95bb956beebdf8044a235b8acafe9a60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseColor: {r: 0.43137255, g: 0.7372549, b: 0.3647059, a: 1}
-  _offsetColor: {r: 0.4, g: 0.6901961, b: 0.3372549, a: 1}
+  boxCollider: {fileID: 0}
+  _baseColor: {r: 0.53783035, g: 0.5849056, b: 0.52696687, a: 0.25490198}
+  _offsetColor: {r: 0.49803922, g: 0.54901963, b: 0.4862745, a: 0.25490198}
   _renderer: {fileID: 4655947322309390382}
   _highlight: {fileID: 834466895855123852}
 --- !u!61 &7197419390378084593
