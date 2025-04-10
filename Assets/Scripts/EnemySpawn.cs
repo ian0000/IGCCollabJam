@@ -87,7 +87,15 @@ public class EnemySpawn : MonoBehaviour
                 var enemyGO = Instantiate(enemyItem._unitObject, tile.transform.position, Quaternion.identity);
                 enemyGO.GetComponent<SpriteRenderer>().sortingOrder = 1;
                 enemyGO.name = $"Enemy ({hp}HP / {atk}ATK)";
-                Debug.Log(enemyGO.name);
+                var stats = enemyGO.GetComponent<EnemyStats>();
+                if (stats != null)
+                {
+                    stats.Init(hp, atk);
+                }
+                else
+                {
+                    Debug.LogWarning("EnemyStats component missing on prefab!");
+                }
             }
         }
     }
