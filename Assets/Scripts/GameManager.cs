@@ -6,7 +6,7 @@ using System;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public GameState GameState;
+    public GameState gameState;
     public int currentTurn = 0;
 
     public EnemySpawn enemySpawner; // Drag and drop this in the Inspector
@@ -24,12 +24,12 @@ public class GameManager : MonoBehaviour
             enemySpawner = FindObjectOfType<EnemySpawn>();
         }
 
-        ChangeState(GameState.EnemySpawnUnits);
+        ChangeState(gameState); // start on whatever it's set to in the inspector for testing purposes
     }
 
     public void ChangeState(GameState newState)
     {
-        GameState = newState;
+        gameState = newState;
         switch (newState)
         {
             case GameState.PlayerDrawCards:
