@@ -32,8 +32,8 @@ public class EnemySpawn : MonoBehaviour
     public EnemiesPerTurn[] enemiesPerTurns;
 
     //variables im going to set here
-    [SerializeField] private GridManager _gridManager;
-    private Dictionary<Vector2, Tile> _tiles;
+    [SerializeField] GridManager _gridManager;
+    [SerializeField] Dictionary<Vector2, Tile> _tiles;
 
     void Start()
     {
@@ -87,6 +87,17 @@ public class EnemySpawn : MonoBehaviour
                 var enemyGO = Instantiate(enemyItem._unitObject, tile.transform.position, Quaternion.identity);
                 enemyGO.GetComponent<SpriteRenderer>().sortingOrder = 1;
                 enemyGO.name = $"Enemy ({hp}HP / {atk}ATK)";
+                EnemyController controller = enemyGO.GetComponent<EnemyController>();
+
+                if (controller != null)
+                {
+                    controller.Init(_gridManager);
+                }
+                else
+                {
+                    Debug.LogWarning("EnemyController component missing on prefab!");
+                }
+
                 var stats = enemyGO.GetComponent<EnemyStats>();
                 if (stats != null)
                 {
@@ -96,6 +107,8 @@ public class EnemySpawn : MonoBehaviour
                 {
                     Debug.LogWarning("EnemyStats component missing on prefab!");
                 }
+                var movingTile = _tiles.FirstOrDefault(x => x.Key == new Vector2(1, 0));
+                controller.MoveTo(movingTile.Value.transform.position);
             }
         }
     }

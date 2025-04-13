@@ -2,27 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile : MonoBehaviour {
+public class Tile : MonoBehaviour
+{
     public BoxCollider2D boxCollider;
 
     [SerializeField] private Color _baseColor, _offsetColor;
     [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] private GameObject _highlight;
 
-    public void Init(bool isOffset) {
+    public bool isBlocked = false;
+
+    public void Init(bool isOffset)
+    {
         _renderer.color = isOffset ? _offsetColor : _baseColor;
     }
 
-    void Start() {
+    void Awake()
+    {
         boxCollider = GetComponent<BoxCollider2D>();
     }
 
-    void OnMouseEnter() {
+    void OnMouseEnter()
+    {
         _highlight.SetActive(true);
     }
 
-    void OnMouseExit() {
+    void OnMouseExit()
+    {
         _highlight.SetActive(false);
     }
-
+    public void SetBlocked(bool blocked)
+    {
+        isBlocked = blocked;
+    }
 }
