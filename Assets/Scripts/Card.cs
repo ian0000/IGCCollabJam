@@ -34,6 +34,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public void OnEndDrag(PointerEventData eventData)
     {
         transform.position = _startPosition;
+        Debug.Log(Camera.main.ScreenToWorldPoint(eventData.position));
         var tile = _gridManager.GetTileAtPosition(Camera.main.ScreenToWorldPoint(eventData.position));
         if (tile)
         {
