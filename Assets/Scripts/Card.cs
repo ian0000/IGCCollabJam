@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -9,8 +10,10 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     [SerializeField] GridManager _gridManager;
     [SerializeField] float _focusDisplacementAmount;
+    [SerializeField] GameObject _plantStats;
+    [SerializeField] Sprite _plantBackground, _trapBackground, _fertilizerBackground;
     [SerializeField] TextMeshProUGUI _seedText, _nameText, _descriptionText, _healthText, _attackText;
-    // [SerializeField] 
+    [SerializeField] Image _portrait, _background;
 
     Vector2? _startPosition;
     CardObject _card;
@@ -29,8 +32,24 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         _seedText.text = _card.seedCount.ToString();
         _nameText.text = _card.cardName;
         _descriptionText.text = _card.description;
-        _healthText.text = _card.health.ToString();
-        _attackText.text = _card.attack.ToString();
+        _portrait.sprite = _card.portrait;
+        _plantStats.SetActive(false);
+        _background.sprite = _plantBackground;
+        if (_card.cardType == CardType.PLANT)
+        {
+            _background.sprite = _plantBackground;
+            _plantStats.SetActive(true);
+            _healthText.text = _card.health.ToString();
+            _attackText.text = _card.attack.ToString();
+        }
+        else if (_card.cardType == CardType.TRAP)
+        {
+            _background.sprite = _trapBackground;
+        }
+        else if (_card.cardType == CardType.FERTILIZER)
+        {
+            _background.sprite = _fertilizerBackground;
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)

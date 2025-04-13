@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bba3264c91fd38b3dab4ef72d3993079, type: 3}
-  m_Name: TestPlant
+  m_Name: TestTrap
   m_EditorClassIdentifier: 
-  cardName: Test Plant
-  cardType: 0
-  description: Just a test of a plant
-  portrait: {fileID: 4531797698899504175, guid: 8df2dff5155d23f419c7b3ad54677c1d, type: 3}
-  seedCount: 1
-  attack: 2
-  health: 2
+  cardName: Test Trap
+  cardType: 1
+  description: This is a test trap. Wouldn't want to step on this bad boy.
+  portrait: {fileID: 5386692555906251054, guid: 2f9c7f129129b9dcf844dd53f0006959, type: 3}
+  seedCount: 2
+  attack: 0
+  health: 0
   effect: {fileID: 0}

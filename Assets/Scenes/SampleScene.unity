@@ -946,8 +946,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -125.69711}
-  m_SizeDelta: {x: -100, y: -251.3943}
+  m_AnchoredPosition: {x: 0, y: -108.86551}
+  m_SizeDelta: {x: -100, y: -217.7311}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1736864024
 MonoBehaviour:
@@ -994,6 +994,8 @@ MonoBehaviour:
   _cards: []
   _deck:
   - {fileID: 11400000, guid: eab7e97dc5084407fae1174759fefeb3, type: 2}
+  - {fileID: 11400000, guid: f4ef998d86da2e2f489deba8f248e2d5, type: 2}
+  - {fileID: 11400000, guid: afd91e4d65c9139f4843c8675dcc888c, type: 2}
 --- !u!1 &1748688773
 GameObject:
   m_ObjectHideFlags: 0

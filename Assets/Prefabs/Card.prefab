@@ -161,13 +161,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1304789992782608555}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1712411521392806014}
-  m_Father: {fileID: 4694236392793087183}
+  m_Father: {fileID: 1736659343236123276}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -580,13 +580,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3504205147689186038}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4084563749293847563}
-  m_Father: {fileID: 4694236392793087183}
+  m_Father: {fileID: 1736659343236123276}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -667,8 +667,7 @@ RectTransform:
   - {fileID: 6608319154750995786}
   - {fileID: 4107173929891575787}
   - {fileID: 2582035029314614919}
-  - {fileID: 2381295372083167935}
-  - {fileID: 8135799910029831629}
+  - {fileID: 1736659343236123276}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -728,11 +727,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gridManager: {fileID: 0}
   _focusDisplacementAmount: 110
+  _plantStats: {fileID: 4464893974938666771}
+  _plantBackground: {fileID: -6751554920230345934, guid: a5a50ab4c0e411c4fbe994d7daa91992, type: 3}
+  _trapBackground: {fileID: 6421496534732791849, guid: 994d69b4d2ca7e679b36102a52dfc13d, type: 3}
+  _fertilizerBackground: {fileID: -8191518290153152998, guid: 1d1e6946bf5e3622bbb2f6daa363dd89, type: 3}
   _seedText: {fileID: 5491781565834992959}
   _nameText: {fileID: 8917362493160453176}
   _descriptionText: {fileID: 6919013423684163845}
   _healthText: {fileID: 5106397000122338680}
   _attackText: {fileID: 5876841000641457655}
+  _portrait: {fileID: 5573218991600413322}
+  _background: {fileID: 4969241913428047236}
 --- !u!1 &4234032863650665736
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,6 +813,43 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &4464893974938666771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1736659343236123276}
+  m_Layer: 5
+  m_Name: PlantStats
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1736659343236123276
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4464893974938666771}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2381295372083167935}
+  - {fileID: 8135799910029831629}
+  m_Father: {fileID: 4694236392793087183}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5381290486849458217
 GameObject:
   m_ObjectHideFlags: 0
