@@ -989,9 +989,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gridManager: {fileID: 1385043777}
   _cardPrefab: {fileID: 8585178518368790935, guid: 80973ba44b310befba3826c8a04c70f5, type: 3}
-  _cards: []
   _cardCount: 7
   _drawWaitTime: 0.3
+  _cards: []
+  _deck:
+  - {fileID: 11400000, guid: eab7e97dc5084407fae1174759fefeb3, type: 2}
 --- !u!1 &1748688773
 GameObject:
   m_ObjectHideFlags: 0
