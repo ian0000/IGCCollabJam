@@ -52,8 +52,14 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         }
     }
 
+    public int GetSeedCost() {
+        return _card.seedCount;
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!SeedManager.Instance.CanPlayCard(this)) return;
+
         _dragging = true;
         if (!_startPosition.HasValue)
         {
@@ -71,8 +77,16 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     {
         ResetPosition();
         var tile = _gridManager.GetTileAtPosition(Camera.main.ScreenToWorldPoint(eventData.position));
-        if (tile)
+        if (tile) 
         {
+            // Check if player has enough seeds
+            if (_card.seedCount > SeedManager.Instance.currentSeeds) 
+            {
+                Debug.Log("Not enough seeds to play this card.");
+                return;
+            }
+
+        
             Debug.Log($"Card {name} used on tile {tile.name}");
             cardPlayed.Invoke(this);
         }

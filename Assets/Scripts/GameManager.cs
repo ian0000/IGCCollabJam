@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.PlayerTurn:
+                // Player turn started — advance seed turn
+                SeedManager.Instance.AdvanceTurn();
                 Debug.Log("Player's turn begins.");
                 break;
 
