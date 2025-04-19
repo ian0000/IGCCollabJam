@@ -144,15 +144,15 @@ ScriptedImporter:
   spriteSheetImportData:
   - name: Card_Stat_Icons_TEST_0
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 0
-      y: 0
-      width: 16
-      height: 16
+      x: 4
+      y: 4
+      width: 9
+      height: 10
     spriteID: b7009274232857f4386f987a59306934
     spriteBone: []
     spriteOutline: []
@@ -164,15 +164,15 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   - name: Card_Stat_Icons_TEST_1
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0, y: 0}
     alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 16
-      y: 0
-      width: 16
-      height: 16
+      x: 19
+      y: 4
+      width: 11
+      height: 10
     spriteID: dcc94be5ab6da0c4cb07279f8c613c86
     spriteBone: []
     spriteOutline: []

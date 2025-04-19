@@ -15,7 +15,7 @@ MonoBehaviour:
   cardName: Test Plant
   cardType: 0
   description: Just a test of a plant
-  portrait: {fileID: 4531797698899504175, guid: 8df2dff5155d23f419c7b3ad54677c1d, type: 3}
+  portrait: {fileID: -3978632328974847016, guid: c8e7cc3026812de449e7f658866b4e2f, type: 3}
   seedCount: 1
   attack: 2
   health: 2

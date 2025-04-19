@@ -15,7 +15,7 @@ MonoBehaviour:
   cardName: Test Fertilizer
   cardType: 2
   description: Test fertilzer. Yum yum.
-  portrait: {fileID: -2305259349994291807, guid: 613f1ba0303abab15816984c3a79a31e, type: 3}
+  portrait: {fileID: 1996582798005301509, guid: 34ed5d0d11573554a84f55da3458ce66, type: 3}
   seedCount: 1
   attack: 0
   health: 0
