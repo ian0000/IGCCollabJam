@@ -16,6 +16,8 @@ public class EnemySpawn : MonoBehaviour
         public int _unitMaxATK;
         [Range(0, 100)]
         public int _unitMaxHP;
+        [Range(0, 5)]
+        public int _stepsPerTurn;
         public GameObject _unitObject;
     }
 
@@ -92,6 +94,7 @@ public class EnemySpawn : MonoBehaviour
                 if (controller != null)
                 {
                     controller.Init(_gridManager);
+                    controller.CurrentTilePos = tile.transform.position;
                 }
                 else
                 {
@@ -107,10 +110,8 @@ public class EnemySpawn : MonoBehaviour
                 {
                     Debug.LogWarning("EnemyStats component missing on prefab!");
                 }
-                controller.SetStepsPerMove(7); // move 3 tiles at a time
-                controller.ContinueMovement();
-                // var movingTile = _tiles.FirstOrDefault(x => x.Key == new Vector2(1, 0));
-                // controller.MoveTo(movingTile.Value.transform.position);
+                controller.SetStepsPerMove(enemyItem._stepsPerTurn + 1);// it counts the current tile + steps
+                controller.MoveFromTopToBottom();
             }
         }
 

@@ -157,6 +157,7 @@ public class EnemyController : MonoBehaviour
     private List<Vector2> FindTopToBottomPathFrom(Vector2 start, Pathfinder pathfinder, Dictionary<Vector2, Tile> tiles)
     {
         int maxY = (int)tiles.Keys.Max(v => v.y);
+
         var goals = tiles.Keys.Where(v => v.y == maxY && !tiles[v].isBlocked);
 
         List<Vector2> shortestPath = null;
