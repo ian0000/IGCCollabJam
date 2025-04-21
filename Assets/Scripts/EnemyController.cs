@@ -8,6 +8,8 @@ public class EnemyController : MonoBehaviour
 {
     private int _stepsPerMove = 2;
     public Vector2 CurrentTilePos;
+    private Vector2 _previousTilePos;
+
     private GridManager _gridManager;
     private float _moveSpeed = 2f;
     private bool _isMoving = false;
@@ -19,7 +21,14 @@ public class EnemyController : MonoBehaviour
         _gridManager = gridManager;
 
     }
-
+    private void Start()
+    {
+        EnemyManager manager = FindObjectOfType<EnemyManager>();
+        if (manager != null)
+        {
+            manager.RegisterEnemy(this);
+        }
+    }
     public void MoveTo(Vector2 targetTilePos)
     {
         if (_isMoving) return;
@@ -37,6 +46,7 @@ public class EnemyController : MonoBehaviour
     private System.Collections.IEnumerator MoveToTile(Vector3 targetPos, Vector2 targetTilePos)
     {
         _isMoving = true;
+        _previousTilePos = CurrentTilePos;
 
         while (Vector3.Distance(transform.position, targetPos) > 0.01f)
         {
@@ -47,6 +57,18 @@ public class EnemyController : MonoBehaviour
 
         gameObject.transform.position = targetPos;
         CurrentTilePos = targetTilePos;
+
+        var currentTile = _gridManager.GetTileAtPosition(CurrentTilePos);
+        if (currentTile != null)
+        {
+            currentTile.UpdateBlockedStatus();
+        }
+        var previousTile = _gridManager.GetTileAtPosition(_previousTilePos);
+        if (previousTile != null)
+        {
+            previousTile.UpdateBlockedStatus();
+        }
+
         _isMoving = false;
     }
 
@@ -105,7 +127,6 @@ public class EnemyController : MonoBehaviour
         {
             _currentPath = path;
             _currentPathIndex = 0;
-            ContinueMovement(); // Move the first chunk
         }
         else
         {
@@ -118,6 +139,7 @@ public class EnemyController : MonoBehaviour
     // 🆕 Partial path following
     private IEnumerator FollowPathChunk(List<Vector2> pathChunk)
     {
+
         foreach (var pos in pathChunk)
         {
             MoveTo(pos);
@@ -125,10 +147,6 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void ContinueMovement()
-    {
-        StartCoroutine(WaitThenMove());
-    }
 
     private IEnumerator WaitThenMove()
     {
@@ -174,4 +192,12 @@ public class EnemyController : MonoBehaviour
         return shortestPath;
     }
 
+    public bool IsMoving()
+    {
+        return _isMoving;
+    }
+    public IEnumerator ContinueMovementCoroutine()
+    {
+        yield return WaitThenMove(); // just yield the internal coroutine
+    }
 }

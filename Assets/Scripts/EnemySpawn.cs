@@ -65,7 +65,6 @@ public class EnemySpawn : MonoBehaviour
             Debug.LogWarning("No enemy data for this turn.");
             return;
         }
-        Debug.Log("Tile count" + _tiles.Count());
         var bottomTiles = GetBottomRowTiles();
         var enemyGroup = enemiesPerTurns[turn];
         var enemyTypes = enemyGroup.Enemy;
@@ -111,7 +110,7 @@ public class EnemySpawn : MonoBehaviour
                     Debug.LogWarning("EnemyStats component missing on prefab!");
                 }
                 controller.SetStepsPerMove(enemyItem._stepsPerTurn + 1);// it counts the current tile + steps
-                controller.MoveFromTopToBottom();
+                // controller.MoveFromTopToBottom();
             }
         }
 
