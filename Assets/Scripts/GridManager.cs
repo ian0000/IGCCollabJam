@@ -25,6 +25,10 @@ public class GridManager : MonoBehaviour
             {
                 var spawnedTile = Instantiate(_tilePrefab, new Vector3(x, y), Quaternion.identity, transform);
                 spawnedTile.name = $"Tile {x} {y}";
+                if (x == 0 && y == 4)
+                {
+                    spawnedTile.isBlocked = true;
+                }
 
                 //offset tile colors
                 var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);

@@ -107,9 +107,15 @@ public class EnemySpawn : MonoBehaviour
                 {
                     Debug.LogWarning("EnemyStats component missing on prefab!");
                 }
-                var movingTile = _tiles.FirstOrDefault(x => x.Key == new Vector2(1, 0));
-                controller.MoveTo(movingTile.Value.transform.position);
+                controller.SetStepsPerMove(7); // move 3 tiles at a time
+                controller.ContinueMovement();
+                // var movingTile = _tiles.FirstOrDefault(x => x.Key == new Vector2(1, 0));
+                // controller.MoveTo(movingTile.Value.transform.position);
             }
         }
+
     }
+
+
+
 }
