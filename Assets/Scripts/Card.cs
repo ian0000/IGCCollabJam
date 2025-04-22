@@ -105,8 +105,6 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         if (!_dragging && _display && _zoomCard == null)
         {
             _startPosition = transform.position;
-            // TODO: Make large card
-            // transform.position += new Vector3(0, _focusDisplacementAmount);
             _zoomCard = Instantiate(_cardPrefab, transform, false);
             _zoomCard.transform.position += new Vector3(0, _displacement);
             _zoomCard.transform.localScale = new Vector2(2, 2);
@@ -117,8 +115,6 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     {
         if (!_dragging)
         {
-            // ResetPosition();
-            // TODO: Remove enlarged card
             if (_zoomCard != null)
             {
                 Destroy(_zoomCard);
