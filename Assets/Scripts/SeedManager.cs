@@ -6,10 +6,10 @@ using System;
 public class SeedManager : MonoBehaviour {
     public static SeedManager Instance;
 
-    public int maxSeeds = 5;
     public int currentSeeds { get; private set; }
     public event Action onSeedsChanged;
 
+    [SerializeField] int maxSeeds = 5;
     private int turnCounter = 0;
     private const int turnsToReplenish = 3;
 
@@ -25,6 +25,19 @@ public class SeedManager : MonoBehaviour {
 
     void OnDestroy() {
         Card.cardPlayed -= OnCardPlayed;
+    }
+
+    public int MaxSeeds
+    {
+        get
+        {
+            return maxSeeds;
+        }
+        set
+        {
+            maxSeeds = value;
+            onSeedsChanged?.Invoke();
+        }
     }
 
     public bool SpendSeeds(int amount) {

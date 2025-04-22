@@ -21,7 +21,7 @@ public class SeedDisplay : MonoBehaviour {
     }
 
     void UpdateDisplay() {
-        _seedText.text = $"Seeds: {SeedManager.Instance.currentSeeds}/{SeedManager.Instance.maxSeeds}";
+        _seedText.text = $"Seeds: {SeedManager.Instance.currentSeeds}/{SeedManager.Instance.MaxSeeds}";
     }
 
     void OnDestroy() {

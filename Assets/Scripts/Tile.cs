@@ -37,9 +37,8 @@ public class Tile : MonoBehaviour
     }
     public void UpdateBlockedStatus()
     {
-        Collider2D hit = Physics2D.OverlapBox(transform.position, new Vector2(1f, 1f), 0f, LayerMask.GetMask("Enemy"));
+        Collider2D hit = Physics2D.OverlapBox(transform.position, new Vector2(1f, 1f), 0f, LayerMask.GetMask("Enemy", "Player"));
         isBlocked = hit != null;
-
     }
 
     // private void OnDrawGizmosSelected()
