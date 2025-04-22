@@ -998,7 +998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15a0f89866adca44c8fbbd7aee546749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: 1
+  gameState: 0
   currentTurn: 0
   enemySpawner: {fileID: 1050183900}
   hand: {fileID: 1736864025}

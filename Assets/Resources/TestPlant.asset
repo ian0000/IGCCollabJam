@@ -15,8 +15,9 @@ MonoBehaviour:
   cardName: Test Plant
   cardType: 0
   description: Just a test of a plant
-  portrait: {fileID: -3978632328974847016, guid: c8e7cc3026812de449e7f658866b4e2f, type: 3}
+  portrait: {fileID: 505666162280716016, guid: c8e7cc3026812de449e7f658866b4e2f, type: 3}
   seedCount: 1
   attack: 2
   health: 2
+  plantPrefab: {fileID: 6039823394177293095, guid: 02ec6d22e2646a3f585e6cd885301b74, type: 3}
   effect: {fileID: 0}

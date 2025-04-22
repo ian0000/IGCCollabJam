@@ -85,9 +85,9 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
                 Debug.Log("Not enough seeds to play this card.");
                 return;
             }
-
-        
             Debug.Log($"Card {name} used on tile {tile.name}");
+            var plant = Instantiate(_card.plantPrefab, tile.transform.position, Quaternion.identity);
+            plant.tilePosition = tile.transform.position;
             cardPlayed.Invoke(this);
         }
         _dragging = false;

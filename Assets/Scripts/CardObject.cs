@@ -17,6 +17,7 @@ public class CardObject : ScriptableObject
     public int seedCount;
     public int attack;
     public int health;
+    public PlantController plantPrefab;
     public Effect effect;
 
     public void DoEffect()

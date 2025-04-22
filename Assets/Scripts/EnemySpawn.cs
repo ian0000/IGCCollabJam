@@ -86,7 +86,6 @@ public class EnemySpawn : MonoBehaviour
                 int atk = Random.Range(1, enemyItem._unitMaxATK + 1);
 
                 var enemyGO = Instantiate(enemyItem._unitObject, tile.transform.position, Quaternion.identity);
-                enemyGO.GetComponent<SpriteRenderer>().sortingOrder = 1;
                 enemyGO.name = $"Enemy ({hp}HP / {atk}ATK)";
                 EnemyController controller = enemyGO.GetComponent<EnemyController>();
 
