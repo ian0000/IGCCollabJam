@@ -9,23 +9,24 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public static event Action<Card> cardPlayed;
 
     [SerializeField] GridManager _gridManager;
-    [SerializeField] float _focusDisplacementAmount;
-    [SerializeField] GameObject _plantStats;
+    [SerializeField] GameObject _plantStats, _cardPrefab;
     [SerializeField] Sprite _plantBackground, _trapBackground, _fertilizerBackground;
     [SerializeField] TextMeshProUGUI _seedText, _nameText, _descriptionText, _healthText, _attackText;
     [SerializeField] Image _portrait, _background;
+    [SerializeField] float _displacement;
 
+    GameObject _zoomCard;
     Vector2? _startPosition;
     CardObject _card;
     RectTransform _rectTransform;
-    bool _dragging;
+    bool _dragging, _display;
 
     void Start()
     {
         _rectTransform = GetComponent<RectTransform>();
     }
 
-    public void Init(GridManager gridManager, CardObject card)
+    public void Init(GridManager gridManager, CardObject card, bool display = true)
     {
         _gridManager = gridManager;
         _card = card;
@@ -50,6 +51,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         {
             _background.sprite = _fertilizerBackground;
         }
+
+        _display = display;
     }
 
     public int GetSeedCost() {
@@ -60,6 +63,10 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     {
         if (!SeedManager.Instance.CanPlayCard(this)) return;
 
+        if (_zoomCard != null)
+        {
+            Destroy(_zoomCard);
+        }
         _dragging = true;
         if (!_startPosition.HasValue)
         {
@@ -95,10 +102,14 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!_dragging)
+        if (!_dragging && _display && _zoomCard == null)
         {
             _startPosition = transform.position;
-            transform.position += new Vector3(0, _focusDisplacementAmount);
+            // TODO: Make large card
+            // transform.position += new Vector3(0, _focusDisplacementAmount);
+            _zoomCard = Instantiate(_cardPrefab, transform, false);
+            _zoomCard.transform.position += new Vector3(0, _displacement);
+            _zoomCard.transform.localScale = new Vector2(2, 2);
         }
     }
 
@@ -106,7 +117,12 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     {
         if (!_dragging)
         {
-            ResetPosition();
+            // ResetPosition();
+            // TODO: Remove enlarged card
+            if (_zoomCard != null)
+            {
+                Destroy(_zoomCard);
+            }
         }
     }
 
