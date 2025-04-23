@@ -24,4 +24,5 @@ MonoBehaviour:
   attack: 1
   health: 4
   plantPrefab: {fileID: 8410188498022139964, guid: 2eb2d20c8a78407b9ae64a733cd9e1d8, type: 3}
-  effectPrefab: {fileID: 0}
+  effectPrefabs:
+  - {fileID: 5994371429334682641, guid: 38133af9e2e2ed3dd9158706b525bcd3, type: 3}

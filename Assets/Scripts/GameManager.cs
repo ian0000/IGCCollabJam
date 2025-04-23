@@ -5,7 +5,7 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
-    public static event Action turnStarted;
+    public static event Action turnStarted, turnEnded;
 
     public static GameManager Instance;
     public GameState gameState;
@@ -60,9 +60,12 @@ public class GameManager : MonoBehaviour
             case GameState.PlayerTurn:
                 Debug.Log("Player entities attack.");
                 // TODO: Call player attacking processes and move this state change to the end of it
-                SeedManager.Instance.AdvanceTurn();
-                currentTurn++; // TODO: Should there be an end turn state?
-                ChangeState(GameState.PlayCards);
+                ChangeState(GameState.EndTurn);
+                break;
+            
+            case GameState.EndTurn:
+                turnEnded?.Invoke();
+                currentTurn++;
                 break;
 
             case GameState.Victory:
@@ -86,6 +89,7 @@ public enum GameState
     PlayCards,
     EnemyTurn,
     PlayerTurn,
+    EndTurn,
     Victory,
     Lose
 }

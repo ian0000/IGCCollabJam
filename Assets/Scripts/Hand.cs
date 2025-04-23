@@ -11,20 +11,21 @@ public class Hand : MonoBehaviour
     [SerializeField] float _drawWaitTime;
     [SerializeField] List<Card> _cards;
     [SerializeField] List<CardObject> _deck;
+    [SerializeField] int turnsToReplenish;
 
-    GameManager _gameManager;
+    int turnCounter;
 
     void Start()
     {
-        _gameManager = FindObjectOfType<GameManager>();
         Card.cardPlayed += CardPlayed;
         GameManager.turnStarted += EnableCards;
+        GameManager.turnEnded += AdvanceTurn;
     }
 
     void EndTurn()
     {
         _cards.ForEach(c => c.enabled = false);
-        _gameManager.ChangeState(GameState.EnemyTurn);
+        GameManager.Instance.ChangeState(GameState.EnemyTurn);
     }
 
     void EnableCards()
@@ -46,7 +47,7 @@ public class Hand : MonoBehaviour
             yield return StartCoroutine(DrawCard());
         }
 
-        _gameManager.ChangeState(GameState.EnemySpawnUnits);
+        GameManager.Instance.ChangeState(GameState.EnemySpawnUnits);
     }
 
     IEnumerator DrawCard()
@@ -68,5 +69,20 @@ public class Hand : MonoBehaviour
         Destroy(card.gameObject);
 
         EndTurn();
+    }
+
+    void AdvanceTurn()
+    {
+        turnCounter++;
+        if (turnCounter >= turnsToReplenish)
+        {
+            turnCounter = 0;
+            GameManager.Instance.ChangeState(GameState.PlayerDrawCards);
+        }
+        else
+        {
+            // TODO: This should probably live elsewhere
+            GameManager.Instance.ChangeState(GameState.PlayCards);
+        }
     }
 }

@@ -12,7 +12,7 @@ public class RegenEffect : MonoBehaviour
     void Start()
     {
         _parent = GetComponentInParent<PlantController>();
-        GameManager.turnStarted += HandleTurnIncrement;
+        GameManager.turnEnded += HandleTurnIncrement;
     }
 
     void HandleTurnIncrement()

@@ -1569,6 +1569,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eab7e97dc5084407fae1174759fefeb3, type: 2}
   - {fileID: 11400000, guid: a5cbb8b07d76e3c47af93c658fcc5670, type: 2}
   - {fileID: 11400000, guid: a5cbb8b07d76e3c47af93c658fcc5670, type: 2}
+  turnsToReplenish: 3
 --- !u!1 &1748688773
 GameObject:
   m_ObjectHideFlags: 0
