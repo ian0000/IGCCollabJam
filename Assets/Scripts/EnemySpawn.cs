@@ -37,9 +37,11 @@ public class EnemySpawn : MonoBehaviour
     [SerializeField] GridManager _gridManager;
     [SerializeField] Dictionary<Vector2, Tile> _tiles;
 
+    GameManager _gameManager;
+
     void Start()
     {
-
+        _gameManager = FindObjectOfType<GameManager>();
     }
 
 
@@ -113,6 +115,7 @@ public class EnemySpawn : MonoBehaviour
             }
         }
 
+        _gameManager.ChangeState(GameState.PlayCards);
     }
 
 

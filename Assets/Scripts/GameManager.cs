@@ -5,6 +5,8 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
+    public static event Action turnStarted;
+
     public static GameManager Instance;
     public GameState gameState;
     public int currentTurn = 0;
@@ -29,6 +31,7 @@ public class GameManager : MonoBehaviour
 
     public void ChangeState(GameState newState)
     {
+
         gameState = newState;
         switch (newState)
         {
@@ -42,14 +45,18 @@ public class GameManager : MonoBehaviour
                 enemySpawner.SpawnEnemiesForTurn(currentTurn);
                 break;
 
-            case GameState.PlayerTurn:
-                // Player turn started — advance seed turn
-                SeedManager.Instance.AdvanceTurn();
-                Debug.Log("Player's turn begins.");
+            case GameState.PlayCards:
+                // Player turn started, increment turn counters
+                turnStarted?.Invoke();
+                Debug.Log("Card playing phase begins.");
                 break;
 
             case GameState.EnemyTurn:
-                Debug.Log("Enemy's turn begins.");
+                Debug.Log("Enemies move and attack.");
+                break;
+            
+            case GameState.PlayerTurn:
+                Debug.Log("Player entities attack.");
                 break;
 
             case GameState.Victory:
@@ -68,10 +75,11 @@ public class GameManager : MonoBehaviour
 
 public enum GameState
 {
-    PlayerDrawCards = 0,
-    EnemySpawnUnits = 1,
-    PlayerTurn = 2,
-    EnemyTurn = 3,
-    Victory = 4,
-    Lose = 5
+    PlayerDrawCards,
+    EnemySpawnUnits,
+    PlayCards,
+    EnemyTurn,
+    PlayerTurn,
+    Victory,
+    Lose
 }

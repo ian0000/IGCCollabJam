@@ -10,18 +10,30 @@ public class Hand : MonoBehaviour
     [SerializeField] int _cardCount;
     [SerializeField] float _drawWaitTime;
     [SerializeField] List<Card> _cards;
-
-    // TODO: temp for testing
     [SerializeField] List<CardObject> _deck;
+
+    GameManager _gameManager;
 
     void Start()
     {
+        _gameManager = FindObjectOfType<GameManager>();
         Card.cardPlayed += CardPlayed;
+        GameManager.turnStarted += EnableCards;
+    }
+
+    void EndTurn()
+    {
+        _cards.ForEach(c => c.enabled = false);
+        _gameManager.ChangeState(GameState.EnemyTurn);
+    }
+
+    void EnableCards()
+    {
+        _cards.ForEach(c => c.enabled = true);
     }
 
     public void DrawCards()
     {
-        _cards.All(c => c.enabled = false);
         StartCoroutine(DrawCardsRoutine());
     }
 
@@ -29,10 +41,12 @@ public class Hand : MonoBehaviour
     {
         for (int i = _cards.Count; i < _cardCount; i++)
         {
+            if (_deck.Count == 0) break;
+
             yield return StartCoroutine(DrawCard());
         }
 
-        _cards.All(c => c.enabled = true);
+        _gameManager.ChangeState(GameState.EnemySpawnUnits);
     }
 
     IEnumerator DrawCard()
@@ -44,11 +58,15 @@ public class Hand : MonoBehaviour
         card.Init(_gridManager, cardObj);
         card.enabled = false;
         _cards.Add(card);
+        _deck.Remove(card.CardObject);
     }
 
     void CardPlayed(Card card)
     {
+        _deck.Add(card.CardObject);
         _cards.Remove(card);
         Destroy(card.gameObject);
+
+        EndTurn();
     }
 }

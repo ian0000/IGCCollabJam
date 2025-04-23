@@ -17,7 +17,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     GameObject _zoomCard;
     Vector2? _startPosition;
-    CardObject _card;
+    CardObject _cardObject;
     RectTransform _rectTransform;
     bool _dragging, _display;
 
@@ -26,28 +26,33 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         _rectTransform = GetComponent<RectTransform>();
     }
 
+    public CardObject CardObject
+    {
+        get { return _cardObject; }
+    }
+
     public void Init(GridManager gridManager, CardObject card, bool display = true)
     {
         _gridManager = gridManager;
-        _card = card;
-        _seedText.text = _card.seedCount.ToString();
-        _nameText.text = _card.cardName;
-        _descriptionText.text = _card.description;
-        _portrait.sprite = _card.portrait;
+        _cardObject = card;
+        _seedText.text = _cardObject.seedCount.ToString();
+        _nameText.text = _cardObject.cardName;
+        _descriptionText.text = _cardObject.description;
+        _portrait.sprite = _cardObject.portrait;
         _plantStats.SetActive(false);
         _background.sprite = _plantBackground;
-        if (_card.cardType == CardType.PLANT)
+        if (_cardObject.cardType == CardType.PLANT)
         {
             _background.sprite = _plantBackground;
             _plantStats.SetActive(true);
-            _healthText.text = _card.health.ToString();
-            _attackText.text = _card.attack.ToString();
+            _healthText.text = _cardObject.health.ToString();
+            _attackText.text = _cardObject.attack.ToString();
         }
-        else if (_card.cardType == CardType.TRAP)
+        else if (_cardObject.cardType == CardType.TRAP)
         {
             _background.sprite = _trapBackground;
         }
-        else if (_card.cardType == CardType.FERTILIZER)
+        else if (_cardObject.cardType == CardType.FERTILIZER)
         {
             _background.sprite = _fertilizerBackground;
         }
@@ -56,7 +61,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     }
 
     public int GetSeedCost() {
-        return _card.seedCount;
+        return _cardObject.seedCount;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -87,7 +92,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         if (tile) 
         {
             // Check if player has enough seeds
-            if (_card.seedCount > SeedManager.Instance.currentSeeds) 
+            if (_cardObject.seedCount > SeedManager.Instance.currentSeeds) 
             {
                 Debug.Log("Not enough seeds to play this card.");
                 return;
@@ -98,10 +103,10 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
                 return;
             }
             Debug.Log($"Card {name} used on tile {tile.name}");
-            var plant = Instantiate(_card.plantPrefab, tile.transform.position, Quaternion.identity);
+            var plant = Instantiate(_cardObject.plantPrefab, tile.transform.position, Quaternion.identity);
             plant.tilePosition = tile.transform.position;
             tile.UpdateBlockedStatus();
-            cardPlayed.Invoke(this);
+            cardPlayed?.Invoke(this);
         }
         _dragging = false;
     }

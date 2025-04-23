@@ -6,11 +6,16 @@ public class PlantController : MonoBehaviour
 
     public Vector2 tilePosition;
 
+    public CardObject CardObject
+    {
+        get { return _cardObject; }
+    }
+
     void Start()
     {
-        if (_cardObject.effectPrefab)
+        foreach(var effect in _cardObject.effectPrefabs)
         {
-            Instantiate(_cardObject.effectPrefab, transform);
+            Instantiate(effect, transform);
         }
     }
 }
