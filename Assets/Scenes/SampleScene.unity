@@ -1363,6 +1363,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSeeds: 5
+--- !u!1 &1687563299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1687563300}
+  m_Layer: 0
+  m_Name: Acorn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1687563300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687563299}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1693707034
 GameObject:
   m_ObjectHideFlags: 0
@@ -1569,6 +1600,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eab7e97dc5084407fae1174759fefeb3, type: 2}
   - {fileID: 11400000, guid: a5cbb8b07d76e3c47af93c658fcc5670, type: 2}
   - {fileID: 11400000, guid: a5cbb8b07d76e3c47af93c658fcc5670, type: 2}
+  - {fileID: 11400000, guid: 7695257f63a3b6a9faa45dab00e5c907, type: 2}
+  - {fileID: 11400000, guid: 7695257f63a3b6a9faa45dab00e5c907, type: 2}
   turnsToReplenish: 3
 --- !u!1 &1748688773
 GameObject:
@@ -1684,3 +1717,4 @@ SceneRoots:
   - {fileID: 1715847110}
   - {fileID: 1748688774}
   - {fileID: 437622044}
+  - {fileID: 1687563300}

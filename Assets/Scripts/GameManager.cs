@@ -16,7 +16,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        Instance = this;
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
     void Start()
@@ -47,14 +48,13 @@ public class GameManager : MonoBehaviour
 
             case GameState.PlayCards:
                 // Player turn started, increment turn counters
-                turnStarted?.Invoke();
                 Debug.Log("Card playing phase begins.");
+                turnStarted?.Invoke();
                 break;
 
             case GameState.EnemyTurn:
                 Debug.Log("Enemies move and attack.");
-                // TODO: Call enemy moving and attacking processes and move this state change to the end of it
-                ChangeState(GameState.PlayerTurn);
+                EnemyManager.Instance.MoveAllEnemies();
                 break;
             
             case GameState.PlayerTurn:
