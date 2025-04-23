@@ -21,7 +21,6 @@ public class SeedManager : MonoBehaviour {
     void Start() {
         currentSeeds = maxSeeds;
         Card.cardPlayed += OnCardPlayed;
-        GameManager.turnStarted += AdvanceTurn;
         onSeedsChanged?.Invoke();
     }
 
@@ -64,7 +63,8 @@ public class SeedManager : MonoBehaviour {
         Debug.Log($"Seeds remaining: {currentSeeds}");
     }
 
-    void AdvanceTurn() {
+    public void AdvanceTurn() {
+        Debug.Log($"Seed Manager Count {turnCounter}");
         turnCounter++;
         if (turnCounter >= turnsToReplenish) {
             currentSeeds = maxSeeds;

@@ -53,10 +53,16 @@ public class GameManager : MonoBehaviour
 
             case GameState.EnemyTurn:
                 Debug.Log("Enemies move and attack.");
+                // TODO: Call enemy moving and attacking processes and move this state change to the end of it
+                ChangeState(GameState.PlayerTurn);
                 break;
             
             case GameState.PlayerTurn:
                 Debug.Log("Player entities attack.");
+                // TODO: Call player attacking processes and move this state change to the end of it
+                SeedManager.Instance.AdvanceTurn();
+                currentTurn++; // TODO: Should there be an end turn state?
+                ChangeState(GameState.PlayCards);
                 break;
 
             case GameState.Victory:

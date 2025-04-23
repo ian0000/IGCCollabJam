@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MakeSeedEffect : MonoBehaviour
+public class IncreaseSeedEffect : MonoBehaviour
 {
     SeedManager _seedManager;
 
