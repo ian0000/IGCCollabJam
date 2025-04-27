@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Name
   - SeedCount
+  - Discard
   layers:
   - Default
   - TransparentFX
