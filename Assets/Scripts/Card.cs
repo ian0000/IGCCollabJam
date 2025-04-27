@@ -69,7 +69,6 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public void OnBeginDrag(PointerEventData eventData)
     {
         _image.raycastTarget = false;
-        if (!SeedManager.Instance.CanPlayCard(this)) return;
 
         if (_zoomCard != null)
         {
@@ -93,6 +92,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         ResetPosition();
         _image.raycastTarget = true;
 
+        // Check if dropped on discard
         if (eventData.pointerEnter?.tag == "Discard")
         {
             Debug.Log($"Card {name} discarded");
