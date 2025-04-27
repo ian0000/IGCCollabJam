@@ -19,11 +19,13 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     Vector2? _startPosition;
     CardObject _cardObject;
     RectTransform _rectTransform;
+    Image _image;
     bool _dragging, _display;
 
     void Start()
     {
         _rectTransform = GetComponent<RectTransform>();
+        _image = GetComponent<Image>();
     }
 
     public CardObject CardObject
@@ -66,6 +68,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        _image.raycastTarget = false;
         if (!SeedManager.Instance.CanPlayCard(this)) return;
 
         if (_zoomCard != null)
@@ -88,6 +91,14 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public void OnEndDrag(PointerEventData eventData)
     {
         ResetPosition();
+        _image.raycastTarget = true;
+
+        if (eventData.pointerEnter?.tag == "Discard")
+        {
+            Debug.Log($"Card {name} discarded");
+            cardPlayed?.Invoke(this);
+        }
+
         var tile = _gridManager.GetTileAtPosition(Camera.main.ScreenToWorldPoint(eventData.position));
         if (tile) 
         {
