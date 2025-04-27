@@ -75,12 +75,12 @@ SpriteRenderer:
   m_SortingLayerID: 926653683
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: -91909655116775567, guid: c008c22fa56196b4a84e7977a25e70ae, type: 3}
+  m_Sprite: {fileID: -6309079259250908913, guid: 7cd3ef58bf8b81f4ca55f64b05e325c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.6875, y: 1.6875}
+  m_Size: {x: 0.34375, y: 0.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -100,6 +100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardObject: {fileID: 11400000, guid: eab7e97dc5084407fae1174759fefeb3, type: 2}
   tilePosition: {x: 0, y: 0}
+  attack: 0
+  health: 0
 --- !u!61 &5702155376600861118
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -137,7 +139,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.34375, y: 0.5}
-    newSize: {x: 1.6875, y: 1.6875}
+    newSize: {x: 0.34375, y: 0.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
