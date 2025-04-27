@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bba3264c91fd38b3dab4ef72d3993079, type: 3}
+  m_Name: Sunflower
+  m_EditorClassIdentifier: 
+  cardName: Sunflower
+  cardType: 0
+  description: 'Ranged
+
+    Photosynthesis
+
+    (Regenerate 1 hp every 2 turns)'
+  portrait: {fileID: 7533158618566644892, guid: 34ed5d0d11573554a84f55da3458ce66, type: 3}
+  seedCount: 4
+  attack: 1
+  health: 4
+  plantPrefab: {fileID: 8410188498022139964, guid: 2eb2d20c8a78407b9ae64a733cd9e1d8, type: 3}
+  effectPrefabs:
+  - {fileID: 5994371429334682641, guid: 38133af9e2e2ed3dd9158706b525bcd3, type: 3}

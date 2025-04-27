@@ -9,57 +9,72 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public static event Action<Card> cardPlayed;
 
     [SerializeField] GridManager _gridManager;
-    [SerializeField] float _focusDisplacementAmount;
-    [SerializeField] GameObject _plantStats;
+    [SerializeField] GameObject _plantStats, _cardPrefab;
     [SerializeField] Sprite _plantBackground, _trapBackground, _fertilizerBackground;
     [SerializeField] TextMeshProUGUI _seedText, _nameText, _descriptionText, _healthText, _attackText;
     [SerializeField] Image _portrait, _background;
+    [SerializeField] float _displacement;
 
+    GameObject _zoomCard;
     Vector2? _startPosition;
-    CardObject _card;
+    CardObject _cardObject;
     RectTransform _rectTransform;
-    bool _dragging;
+    Image _image;
+    bool _dragging, _display;
 
     void Start()
     {
         _rectTransform = GetComponent<RectTransform>();
+        _image = GetComponent<Image>();
     }
 
-    public void Init(GridManager gridManager, CardObject card)
+    public CardObject CardObject
+    {
+        get { return _cardObject; }
+    }
+
+    public void Init(GridManager gridManager, CardObject card, bool display = true)
     {
         _gridManager = gridManager;
-        _card = card;
-        _seedText.text = _card.seedCount.ToString();
-        _nameText.text = _card.cardName;
-        _descriptionText.text = _card.description;
-        _portrait.sprite = _card.portrait;
+        _cardObject = card;
+        _seedText.text = _cardObject.seedCount.ToString();
+        _nameText.text = _cardObject.cardName;
+        _descriptionText.text = _cardObject.description;
+        _portrait.sprite = _cardObject.portrait;
         _plantStats.SetActive(false);
         _background.sprite = _plantBackground;
-        if (_card.cardType == CardType.PLANT)
+        if (_cardObject.cardType == CardType.PLANT)
         {
             _background.sprite = _plantBackground;
             _plantStats.SetActive(true);
-            _healthText.text = _card.health.ToString();
-            _attackText.text = _card.attack.ToString();
+            _healthText.text = _cardObject.health.ToString();
+            _attackText.text = _cardObject.attack.ToString();
         }
-        else if (_card.cardType == CardType.TRAP)
+        else if (_cardObject.cardType == CardType.TRAP)
         {
             _background.sprite = _trapBackground;
         }
-        else if (_card.cardType == CardType.FERTILIZER)
+        else if (_cardObject.cardType == CardType.FERTILIZER)
         {
             _background.sprite = _fertilizerBackground;
         }
+
+        _display = display;
     }
 
     public int GetSeedCost() {
-        return _card.seedCount;
+        return _cardObject.seedCount;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        _image.raycastTarget = false;
         if (!SeedManager.Instance.CanPlayCard(this)) return;
 
+        if (_zoomCard != null)
+        {
+            Destroy(_zoomCard);
+        }
         _dragging = true;
         if (!_startPosition.HasValue)
         {
@@ -76,29 +91,45 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public void OnEndDrag(PointerEventData eventData)
     {
         ResetPosition();
+        _image.raycastTarget = true;
+
+        if (eventData.pointerEnter?.tag == "Discard")
+        {
+            Debug.Log($"Card {name} discarded");
+            cardPlayed?.Invoke(this);
+        }
+
         var tile = _gridManager.GetTileAtPosition(Camera.main.ScreenToWorldPoint(eventData.position));
         if (tile) 
         {
             // Check if player has enough seeds
-            if (_card.seedCount > SeedManager.Instance.currentSeeds) 
+            if (_cardObject.seedCount > SeedManager.Instance.currentSeeds) 
             {
                 Debug.Log("Not enough seeds to play this card.");
                 return;
             }
-
-        
+            if (tile.isBlocked)
+            {
+                Debug.Log("Tile already occupided");
+                return;
+            }
             Debug.Log($"Card {name} used on tile {tile.name}");
-            cardPlayed.Invoke(this);
+            var plant = Instantiate(_cardObject.plantPrefab, tile.transform.position, Quaternion.identity);
+            plant.tilePosition = tile.transform.position;
+            tile.UpdateBlockedStatus();
+            cardPlayed?.Invoke(this);
         }
         _dragging = false;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!_dragging)
+        if (!_dragging && _display && _zoomCard == null)
         {
             _startPosition = transform.position;
-            transform.position += new Vector3(0, _focusDisplacementAmount);
+            _zoomCard = Instantiate(_cardPrefab, transform, false);
+            _zoomCard.transform.position += new Vector3(0, _displacement);
+            _zoomCard.transform.localScale = new Vector2(2, 2);
         }
     }
 
@@ -106,7 +137,10 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     {
         if (!_dragging)
         {
-            ResetPosition();
+            if (_zoomCard != null)
+            {
+                Destroy(_zoomCard);
+            }
         }
     }
 

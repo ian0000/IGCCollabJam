@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bba3264c91fd38b3dab4ef72d3993079, type: 3}
+  m_Name: Seedling
+  m_EditorClassIdentifier: 
+  cardName: Seedling
+  cardType: 0
+  description: "Refresh 1 seed\nIncreases max seeds by 1 while alive\nCan\u2019t
+    attack"
+  portrait: {fileID: 505666162280716016, guid: c8e7cc3026812de449e7f658866b4e2f, type: 3}
+  seedCount: 0
+  attack: 0
+  health: 1
+  plantPrefab: {fileID: 6039823394177293095, guid: 02ec6d22e2646a3f585e6cd885301b74, type: 3}
+  effectPrefabs:
+  - {fileID: 1724341043297992499, guid: 661747b4622fc1b23ab9f8453fc6c573, type: 3}

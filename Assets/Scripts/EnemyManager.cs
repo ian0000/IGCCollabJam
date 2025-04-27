@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    public static EnemyManager Instance;
+
     public List<EnemyController> _enemies = new List<EnemyController>();
     private bool _isProcessing = false;
-    void Start()
+    void Awake()
     {
-
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
+
     public void MoveAllEnemies()
     {
         if (!_isProcessing)
@@ -33,6 +37,7 @@ public class EnemyManager : MonoBehaviour
         }
 
         _isProcessing = false;
+        GameManager.Instance.ChangeState(GameState.PlayerTurn);
     }
 
 }

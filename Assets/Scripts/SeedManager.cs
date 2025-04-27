@@ -6,10 +6,10 @@ using System;
 public class SeedManager : MonoBehaviour {
     public static SeedManager Instance;
 
-    public int maxSeeds = 5;
     public int currentSeeds { get; private set; }
     public event Action onSeedsChanged;
 
+    [SerializeField] int maxSeeds = 5;
     private int turnCounter = 0;
     private const int turnsToReplenish = 3;
 
@@ -21,10 +21,25 @@ public class SeedManager : MonoBehaviour {
     void Start() {
         currentSeeds = maxSeeds;
         Card.cardPlayed += OnCardPlayed;
+        GameManager.turnEnded += AdvanceTurn;
+        onSeedsChanged?.Invoke();
     }
 
     void OnDestroy() {
         Card.cardPlayed -= OnCardPlayed;
+    }
+
+    public int MaxSeeds
+    {
+        get
+        {
+            return maxSeeds;
+        }
+        set
+        {
+            maxSeeds = value;
+            onSeedsChanged?.Invoke();
+        }
     }
 
     public bool SpendSeeds(int amount) {
@@ -49,7 +64,8 @@ public class SeedManager : MonoBehaviour {
         Debug.Log($"Seeds remaining: {currentSeeds}");
     }
 
-    public void AdvanceTurn() {
+    void AdvanceTurn() {
+        Debug.Log($"Seed Manager Count {turnCounter}");
         turnCounter++;
         if (turnCounter >= turnsToReplenish) {
             currentSeeds = maxSeeds;

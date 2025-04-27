@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bba3264c91fd38b3dab4ef72d3993079, type: 3}
-  m_Name: TestFertilizer
+  m_Name: Acorn
   m_EditorClassIdentifier: 
-  cardName: Test Fertilizer
-  cardType: 2
-  description: Test fertilzer. Yum yum.
+  cardName: Acorn
+  cardType: 0
+  description: Can't attack
   portrait: {fileID: 1996582798005301509, guid: 34ed5d0d11573554a84f55da3458ce66, type: 3}
-  seedCount: 1
+  seedCount: 2
   attack: 0
-  health: 0
-  effect: {fileID: 0}
+  health: 5
+  plantPrefab: {fileID: 8410188498022139964, guid: 0cb61fddddb42ddf78cf8fe923dde469, type: 3}
+  effectPrefabs: []

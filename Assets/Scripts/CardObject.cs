@@ -17,10 +17,6 @@ public class CardObject : ScriptableObject
     public int seedCount;
     public int attack;
     public int health;
-    public Effect effect;
-
-    public void DoEffect()
-    {
-        Instantiate(effect);
-    }
+    public PlantController plantPrefab;
+    public GameObject[] effectPrefabs;
 }

@@ -17,11 +17,10 @@ public class SeedDisplay : MonoBehaviour {
 
         // Subscribe to seed change updates and update display once initially
         SeedManager.Instance.onSeedsChanged += UpdateDisplay;
-        UpdateDisplay();
     }
 
     void UpdateDisplay() {
-        _seedText.text = $"Seeds: {SeedManager.Instance.currentSeeds}/{SeedManager.Instance.maxSeeds}";
+        _seedText.text = $"Seeds: {SeedManager.Instance.currentSeeds}/{SeedManager.Instance.MaxSeeds}";
     }
 
     void OnDestroy() {

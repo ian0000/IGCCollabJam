@@ -37,9 +37,11 @@ public class EnemySpawn : MonoBehaviour
     [SerializeField] GridManager _gridManager;
     [SerializeField] Dictionary<Vector2, Tile> _tiles;
 
+    GameManager _gameManager;
+
     void Start()
     {
-
+        _gameManager = FindObjectOfType<GameManager>();
     }
 
 
@@ -86,7 +88,6 @@ public class EnemySpawn : MonoBehaviour
                 int atk = Random.Range(1, enemyItem._unitMaxATK + 1);
 
                 var enemyGO = Instantiate(enemyItem._unitObject, tile.transform.position, Quaternion.identity);
-                enemyGO.GetComponent<SpriteRenderer>().sortingOrder = 1;
                 enemyGO.name = $"Enemy ({hp}HP / {atk}ATK)";
                 EnemyController controller = enemyGO.GetComponent<EnemyController>();
 
@@ -114,6 +115,7 @@ public class EnemySpawn : MonoBehaviour
             }
         }
 
+        _gameManager.ChangeState(GameState.PlayCards);
     }
 
 
