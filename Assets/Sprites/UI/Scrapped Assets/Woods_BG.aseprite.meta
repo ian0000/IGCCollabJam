@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0297cc57de9763b478399880c3086845
+guid: 2f0651aa9baf3224b9b58f0493781244
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -121,9 +121,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: beanstalk BG
+  - name: Woods_BG
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.015873017}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -131,8 +131,8 @@ ScriptedImporter:
       x: 4
       y: 4
       width: 320
-      height: 181
-    spriteID: 17f59d5db89117f44ba65de2ff8281ac
+      height: 189
+    spriteID: c54dd8c481700d44bac6c7fe8347fc09
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,21 +144,21 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -1878576502
-    name: beanstalk BG
+    guid: -1794624718
+    name: Woods_BG
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: beanstalk BG
+    - name: Woods_BG
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 0
-        y: 0
+        y: -3
         width: 320
-        height: 181
-      spriteId: 17f59d5db89117f44ba65de2ff8281ac
+        height: 189
+      spriteId: c54dd8c481700d44bac6c7fe8347fc09
     linkedCells: []
     parentIndex: -1
   platformSettings: []
