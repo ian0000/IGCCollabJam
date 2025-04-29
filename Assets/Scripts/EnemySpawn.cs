@@ -94,7 +94,7 @@ public class EnemySpawn : MonoBehaviour
                 if (controller != null)
                 {
                     controller.Init(_gridManager);
-                    controller.CurrentTilePos = tile.transform.position;
+                    controller.CurrentTilePos = tile.coords;
                 }
                 else
                 {

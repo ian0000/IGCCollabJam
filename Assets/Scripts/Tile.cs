@@ -5,16 +5,12 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     public BoxCollider2D boxCollider;
+    public Vector2Int coords;
 
-    [SerializeField] private Color _baseColor, _offsetColor;
     [SerializeField] private SpriteRenderer _renderer;
+    [SerializeField] bool _isOffset;
 
     public bool isBlocked = false;
-
-    public void Init(bool isOffset)
-    {
-        _renderer.color = isOffset ? _offsetColor : _baseColor;
-    }
 
     void Awake()
     {
