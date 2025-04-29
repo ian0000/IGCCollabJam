@@ -160,7 +160,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -185,8 +185,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boxCollider: {fileID: 0}
-  _baseColor: {r: 0.53783035, g: 0.5849056, b: 0.52696687, a: 0.25490198}
-  _offsetColor: {r: 0.49803922, g: 0.54901963, b: 0.4862745, a: 0.25490198}
+  _baseColor: {r: 0.53783035, g: 0.5849056, b: 0.52696687, a: 0.18431373}
+  _offsetColor: {r: 0.49803922, g: 0.54901963, b: 0.4862745, a: 0.18431373}
   _renderer: {fileID: 4655947322309390382}
   isBlocked: 0
 --- !u!61 &7197419390378084593
