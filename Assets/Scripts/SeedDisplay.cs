@@ -1,26 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class SeedDisplay : MonoBehaviour {
-    [SerializeField] TextMeshProUGUI _seedText;
+    // These are in order
+    [SerializeField] Sprite[] _digits;
+
+    // may have either one
+    SpriteRenderer _spriteRenderer;
+    Image _image;
 
     void Start() {
-        StartCoroutine(WaitForSeedManager());
-    }
-
-    System.Collections.IEnumerator WaitForSeedManager() {
-        // Wait until SeedManager.Instance is available
-        while (SeedManager.Instance == null)
-            yield return null;
-
-        // Subscribe to seed change updates and update display once initially
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _image = GetComponent<Image>();
         SeedManager.Instance.onSeedsChanged += UpdateDisplay;
+        UpdateDisplay();
     }
 
     void UpdateDisplay() {
-        _seedText.text = $"Seeds: {SeedManager.Instance.currentSeeds}/{SeedManager.Instance.MaxSeeds}";
+        var digit = _digits[SeedManager.Instance.currentSeeds];
+        if (_spriteRenderer != null)
+            _spriteRenderer.sprite = digit;
+        if (_image != null)
+            _image.sprite = digit;
+
     }
 
     void OnDestroy() {

@@ -15,7 +15,7 @@ MonoBehaviour:
   cardName: Acorn
   cardType: 0
   description: Can't attack
-  portrait: {fileID: 1996582798005301509, guid: 34ed5d0d11573554a84f55da3458ce66, type: 3}
+  portrait: {fileID: 1885869047882058376, guid: 417ca475a7d9b70f2adcf1b7ee09353b, type: 3}
   seedCount: 2
   attack: 0
   health: 5
