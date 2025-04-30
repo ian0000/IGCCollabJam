@@ -212,7 +212,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.7917, y: 12.9}
+  m_AnchoredPosition: {x: 2.7917, y: 12.1}
   m_SizeDelta: {x: 26, y: 28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6331577785047638028
@@ -539,8 +539,6 @@ MonoBehaviour:
   _portrait: {fileID: 5573218991600413322}
   _background: {fileID: 4969241913428047236}
   _displacement: 300
-  _playedSound: {fileID: 8300000, guid: 1de4a98c838fb4d9295ddacc1d52d574, type: 3}
-  _discardSound: {fileID: 8300000, guid: 17132dfb1d3aa908a89df7fa4c2bde6e, type: 3}
 --- !u!82 &7265673038155809793
 AudioSource:
   m_ObjectHideFlags: 0
