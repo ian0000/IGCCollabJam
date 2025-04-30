@@ -116,7 +116,6 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
             Debug.Log($"Card {name} used on tile {tile.name}");
             var plant = Instantiate(_cardObject.plantPrefab, tile.transform.position, Quaternion.identity);
             plant.tilePosition = tile.transform.position;
-            tile.UpdateBlockedStatus();
             cardPlayed?.Invoke(this);
         }
         _dragging = false;

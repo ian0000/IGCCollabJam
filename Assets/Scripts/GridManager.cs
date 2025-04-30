@@ -10,7 +10,7 @@ public class GridManager : MonoBehaviour
 
     [SerializeField] private Transform _cam;
 
-    private Dictionary<Vector2, Tile> _tiles;
+    private Dictionary<Vector2Int, Tile> _tiles;
     void Awake()
     {
         GenerateGrid();
@@ -18,7 +18,7 @@ public class GridManager : MonoBehaviour
 
     void GenerateGrid()
     {
-        _tiles = new Dictionary<Vector2, Tile>();
+        _tiles = new Dictionary<Vector2Int, Tile>();
         foreach (var tile in GetComponentsInChildren<Tile>())
         {
             _tiles[tile.coords] = tile;
@@ -31,7 +31,7 @@ public class GridManager : MonoBehaviour
     {
         foreach (var tile in _tiles.Values)
         {
-            if (tile.boxCollider.bounds.Contains(pos))
+            if (tile.Contains(pos))
             {
                 return tile;
             }
@@ -39,7 +39,7 @@ public class GridManager : MonoBehaviour
         return null;
     }
 
-    public Dictionary<Vector2, Tile> GetTiles()
+    public Dictionary<Vector2Int, Tile> GetTiles()
     {
         return _tiles;
     }

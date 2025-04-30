@@ -7,14 +7,14 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     private int _stepsPerMove = 2;
-    public Vector2 CurrentTilePos;
-    private Vector2 _previousTilePos;
+    public Vector2Int CurrentTilePos;
+    private Vector2Int _previousTilePos;
 
     private GridManager _gridManager;
     private float _moveSpeed = 2f;
     private bool _isMoving = false;
 
-    private List<Vector2> _currentPath;
+    private List<Vector2Int> _currentPath;
     private int _currentPathIndex;
     public void Init(GridManager gridManager)
     {
@@ -29,7 +29,7 @@ public class EnemyController : MonoBehaviour
             manager.RegisterEnemy(this);
         }
     }
-    public void MoveTo(Vector2 targetTilePos)
+    public void MoveTo(Vector2Int targetTilePos)
     {
         if (_isMoving) return;
 
@@ -43,7 +43,7 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(MoveToTile(tile.transform.position, targetTilePos));
     }
 
-    private System.Collections.IEnumerator MoveToTile(Vector3 targetPos, Vector2 targetTilePos)
+    private System.Collections.IEnumerator MoveToTile(Vector3 targetPos, Vector2Int targetTilePos)
     {
         _isMoving = true;
         _previousTilePos = CurrentTilePos;
@@ -61,23 +61,23 @@ public class EnemyController : MonoBehaviour
         var currentTile = _gridManager.GetTileAtPosition(CurrentTilePos);
         if (currentTile != null)
         {
-            currentTile.UpdateBlockedStatus();
+            // currentTile.UpdateBlockedStatus();
         }
         var previousTile = _gridManager.GetTileAtPosition(_previousTilePos);
         if (previousTile != null)
         {
-            previousTile.UpdateBlockedStatus();
+            // previousTile.UpdateBlockedStatus();
         }
 
         _isMoving = false;
     }
 
-    public void FollowPath(List<Vector2> path)
+    public void FollowPath(List<Vector2Int> path)
     {
         StartCoroutine(FollowPathCoroutine(path));
     }
 
-    private IEnumerator FollowPathCoroutine(List<Vector2> path)
+    private IEnumerator FollowPathCoroutine(List<Vector2Int> path)
     {
         foreach (var pos in path)
         {
@@ -86,15 +86,15 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private List<Vector2> FindTopToBottomPath(Pathfinder pathfinder, Dictionary<Vector2, Tile> tiles)
+    private List<Vector2Int> FindTopToBottomPath(Pathfinder pathfinder, Dictionary<Vector2Int, Tile> tiles)
     {
-        int maxY = (int)tiles.Keys.Max(v => v.y);
-        int minY = (int)tiles.Keys.Min(v => v.y);
+        int maxY = tiles.Keys.Max(v => v.y);
+        int minY = tiles.Keys.Min(v => v.y);
 
         var starts = tiles.Keys.Where(v => v.y == minY && !tiles[v].isBlocked);
         var goals = tiles.Keys.Where(v => v.y == maxY && !tiles[v].isBlocked);
 
-        List<Vector2> shortestPath = null;
+        List<Vector2Int> shortestPath = null;
 
         foreach (var start in starts)
         {
@@ -137,7 +137,7 @@ public class EnemyController : MonoBehaviour
     // 🆕 Call this externally to continue movement
 
     // 🆕 Partial path following
-    private IEnumerator FollowPathChunk(List<Vector2> pathChunk)
+    private IEnumerator FollowPathChunk(List<Vector2Int> pathChunk)
     {
 
         foreach (var pos in pathChunk)
@@ -172,13 +172,13 @@ public class EnemyController : MonoBehaviour
             Debug.LogWarning("No valid path found after rechecking.");
         }
     }
-    private List<Vector2> FindTopToBottomPathFrom(Vector2 start, Pathfinder pathfinder, Dictionary<Vector2, Tile> tiles)
+    private List<Vector2Int> FindTopToBottomPathFrom(Vector2Int start, Pathfinder pathfinder, Dictionary<Vector2Int, Tile> tiles)
     {
         int maxY = (int)tiles.Keys.Max(v => v.y);
 
         var goals = tiles.Keys.Where(v => v.y == maxY && !tiles[v].isBlocked);
 
-        List<Vector2> shortestPath = null;
+        List<Vector2Int> shortestPath = null;
 
         foreach (var goal in goals)
         {

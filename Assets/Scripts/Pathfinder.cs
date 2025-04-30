@@ -6,19 +6,19 @@ using UnityEngine;
 
 public class Pathfinder
 {
-    private Dictionary<Vector2, Tile> _tiles;
+    private Dictionary<Vector2Int, Tile> _tiles;
 
-    public Pathfinder(Dictionary<Vector2, Tile> tiles)
+    public Pathfinder(Dictionary<Vector2Int, Tile> tiles)
     {
         _tiles = tiles;
     }
 
-    public List<Vector2> FindPath(Vector2 start, Vector2 goal)
+    public List<Vector2Int> FindPath(Vector2Int start, Vector2Int goal)
     {
         var openList = new List<Node>();
-        var closedList = new HashSet<Vector2>();
+        var closedList = new HashSet<Vector2Int>();
 
-        openList.Add(new Node(start, null, 0, Vector2.Distance(start, goal)));
+        openList.Add(new Node(start, null, 0, Vector2Int.Distance(start, goal)));
 
         while (openList.Count > 0)
         {
@@ -55,9 +55,9 @@ public class Pathfinder
         return null; // No path
     }
 
-    private List<Vector2> ReconstructPath(Node node)
+    private List<Vector2Int> ReconstructPath(Node node)
     {
-        var path = new List<Vector2>();
+        var path = new List<Vector2Int>();
         while (node != null)
         {
             path.Add(node.Position);
@@ -67,17 +67,17 @@ public class Pathfinder
         return path;
     }
 
-    private List<Vector2> GetNeighbors(Vector2 pos)
+    private List<Vector2Int> GetNeighbors(Vector2Int pos)
     {
-        return new List<Vector2>
+        return new List<Vector2Int>
         {
-            pos + Vector2.up,
-            pos + Vector2.down,
-            pos + Vector2.left,
-            pos + Vector2.right
+            pos + Vector2Int.up,
+            pos + Vector2Int.down,
+            pos + Vector2Int.left,
+            pos + Vector2Int.right
         };
     }
-    public List<Vector2> FindTopToBottomPath()
+    public List<Vector2Int> FindTopToBottomPath()
     {
         int maxY = (int)_tiles.Keys.Max(v => v.y);
         int minY = (int)_tiles.Keys.Min(v => v.y);
@@ -85,7 +85,7 @@ public class Pathfinder
         var starts = _tiles.Keys.Where(v => v.y == minY && !_tiles[v].isBlocked);
         var goals = _tiles.Keys.Where(v => v.y == maxY && !_tiles[v].isBlocked);
 
-        List<Vector2> shortestPath = null;
+        List<Vector2Int> shortestPath = null;
 
         foreach (var start in starts)
         {

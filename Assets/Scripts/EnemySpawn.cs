@@ -35,7 +35,7 @@ public class EnemySpawn : MonoBehaviour
 
     //variables im going to set here
     [SerializeField] GridManager _gridManager;
-    [SerializeField] Dictionary<Vector2, Tile> _tiles;
+    [SerializeField] Dictionary<Vector2Int, Tile> _tiles;
 
     GameManager _gameManager;
 

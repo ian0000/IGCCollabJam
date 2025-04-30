@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class Node
 {
-    public Vector2 Position;
+    public Vector2Int Position;
     public Node Parent;
     public float G;
     public float H;
     public float F => G + H;
 
-    public Node(Vector2 pos, Node parent, float g, float h)
+    public Node(Vector2Int pos, Node parent, float g, float h)
     {
         Position = pos;
         Parent = parent;
