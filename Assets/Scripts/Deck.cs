@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class Deck : MonoBehaviour
 {
     [SerializeField] GameObject _lowerCardsGroup, _topCard;
     [SerializeField] List<CardObject> _cards;
+
+    AudioSource _audioSource;
 
     public int Count
     {
@@ -25,13 +28,16 @@ public class Deck : MonoBehaviour
 
     public CardObject Draw()
     {
+        _audioSource.Play();
         var randint = Random.Range(0, _cards.Count);
         return _cards[randint];
     }
 
     void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
         Card.cardPlayed += (Card _) => CheckCards();
+        Card.cardDiscarded += (Card _) => CheckCards();
     }
 
     void CheckCards()

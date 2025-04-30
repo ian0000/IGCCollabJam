@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(AudioSource))]
 public class Hand : MonoBehaviour
 {
     [SerializeField] GridManager _gridManager;
@@ -14,10 +15,15 @@ public class Hand : MonoBehaviour
     [SerializeField] int _cardCount, _maxEndingCards;
     [SerializeField] float _drawWaitTime;
     [SerializeField] List<Card> _cards;
+    [SerializeField] AudioClip _playedSound, _discardSound;
+
+    AudioSource _audioSource;
 
     void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
         Card.cardPlayed += CardPlayed;
+        Card.cardDiscarded += CardDiscarded;
         GameManager.turnStarted += EnableCards;
     }
 
@@ -68,6 +74,18 @@ public class Hand : MonoBehaviour
     }
 
     void CardPlayed(Card card)
+    {
+        _audioSource.PlayOneShot(_playedSound);
+        RemoveCard(card);
+    }
+
+    void CardDiscarded(Card card)
+    {
+        _audioSource.PlayOneShot(_discardSound);
+        RemoveCard(card);
+    }
+
+    void RemoveCard(Card card)
     {
         _deck.Add(card.CardObject);
         _cards.Remove(card);

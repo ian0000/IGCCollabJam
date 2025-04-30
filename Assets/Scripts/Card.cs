@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(AudioSource))]
 public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public static event Action<Card> cardPlayed;
+    public static event Action<Card> cardPlayed, cardDiscarded;
 
     [SerializeField] GridManager _gridManager;
     [SerializeField] GameObject _plantStats, _cardPrefab;
@@ -97,7 +98,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         if (eventData.pointerEnter?.tag == "Discard")
         {
             Debug.Log($"Card {name} discarded");
-            cardPlayed?.Invoke(this);
+            cardDiscarded?.Invoke(this);
         }
 
         var tile = _gridManager.GetTileAtPosition(Camera.main.ScreenToWorldPoint(eventData.position));
