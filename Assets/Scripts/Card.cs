@@ -11,7 +11,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     [SerializeField] GridManager _gridManager;
     [SerializeField] GameObject _plantStats, _cardPrefab;
     [SerializeField] Sprite _plantBackground, _trapBackground, _fertilizerBackground;
-    [SerializeField] TextMeshProUGUI _seedText, _nameText, _descriptionText, _healthText, _attackText;
+    [SerializeField] TextMeshProUGUI _nameText, _descriptionText;
+    [SerializeField] DisplayNumber _seedCount, _health, _attack;
     [SerializeField] Image _portrait, _background;
     [SerializeField] float _displacement;
 
@@ -37,7 +38,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     {
         _gridManager = gridManager;
         _cardObject = card;
-        _seedText.text = _cardObject.seedCount.ToString();
+        _seedCount.SetNumber(_cardObject.seedCount);
         _nameText.text = _cardObject.cardName;
         _descriptionText.text = _cardObject.description;
         _portrait.sprite = _cardObject.portrait;
@@ -47,8 +48,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         {
             _background.sprite = _plantBackground;
             _plantStats.SetActive(true);
-            _healthText.text = _cardObject.health.ToString();
-            _attackText.text = _cardObject.attack.ToString();
+            _health.SetNumber(_cardObject.health);
+            _attack.SetNumber(_cardObject.attack);
         }
         else if (_cardObject.cardType == CardType.TRAP)
         {

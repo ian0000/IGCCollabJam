@@ -1198,8 +1198,8 @@ RectTransform:
   m_Children:
   - {fileID: 950979389}
   - {fileID: 1165867065}
-  - {fileID: 1736864023}
   - {fileID: 1595478729}
+  - {fileID: 1736864023}
   - {fileID: 420894399}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3906,6 +3906,7 @@ GameObject:
   - component: {fileID: 1595478733}
   - component: {fileID: 1595478732}
   - component: {fileID: 1595478734}
+  - component: {fileID: 1595478735}
   m_Layer: 5
   m_Name: SeedDisplay
   m_TagString: Untagged
@@ -3983,6 +3984,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a7be9bc6abe0b949a5c3fe538f58318, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1595478735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595478728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 487ee32071b3e2349815a83376b542a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _digits:
