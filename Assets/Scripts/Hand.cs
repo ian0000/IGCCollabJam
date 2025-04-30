@@ -30,6 +30,7 @@ public class Hand : MonoBehaviour
     void EnableCards()
     {
         _discardArea.SetActive(true);
+        _endTurnButton.gameObject.SetActive(true);
         _cards.ForEach(c => c.enabled = true);
         CheckEndTurnEnabled();
     }
@@ -39,6 +40,7 @@ public class Hand : MonoBehaviour
         if (_cards.Count <= _maxEndingCards)
         {
             _discardArea.SetActive(false);
+            _endTurnButton.gameObject.SetActive(false);
             _cards.ForEach(c => c.enabled = false);
             GameManager.Instance.ChangeState(GameState.EnemyTurn);
         }
