@@ -8,12 +8,12 @@ public class Hand : MonoBehaviour
 {
     [SerializeField] GridManager _gridManager;
     [SerializeField] GameObject _discardArea;
+    [SerializeField] Deck _deck;
     [SerializeField] Button _endTurnButton;
     [SerializeField] Card _cardPrefab;
     [SerializeField] int _cardCount, _maxEndingCards;
     [SerializeField] float _drawWaitTime;
     [SerializeField] List<Card> _cards;
-    [SerializeField] List<CardObject> _deck;
 
     void Start()
     {
@@ -60,8 +60,7 @@ public class Hand : MonoBehaviour
     {
         yield return new WaitForSeconds(_drawWaitTime);
         var card = Instantiate(_cardPrefab, transform);
-        var randint = Random.Range(0, _deck.Count);
-        var cardObj = _deck[randint];
+        var cardObj = _deck.Draw();
         card.Init(_gridManager, cardObj);
         card.enabled = false;
         _cards.Add(card);
