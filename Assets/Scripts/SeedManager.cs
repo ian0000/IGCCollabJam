@@ -51,6 +51,13 @@ public class SeedManager : MonoBehaviour {
         return true;
     }
 
+    public void AddSeed() {
+        if (currentSeeds < maxSeeds) {
+            currentSeeds++;
+            onSeedsChanged?.Invoke();
+        }
+    }
+
     void OnCardPlayed(Card card) {
         int cost = card.GetSeedCost();
 

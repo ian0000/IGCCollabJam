@@ -8,9 +8,10 @@ public class IncreaseSeedEffect : MonoBehaviour
     {
         _seedManager = FindObjectOfType<SeedManager>();
         _seedManager.MaxSeeds++;
+        _seedManager.AddSeed();
     }
 
-    void ODestroy()
+    void OnDestroy()
     {
         _seedManager.MaxSeeds--;
     }
