@@ -1,22 +1,23 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
+    public static GridManager Instance;
+
     [SerializeField] private int _width, _height;
-
     [SerializeField] private Tile _tilePrefab;
-
     [SerializeField] private Transform _cam;
 
     private Dictionary<Vector2Int, Tile> _tiles;
     void Awake()
     {
-        GenerateGrid();
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
     }
 
-    void GenerateGrid()
+    void Start()
     {
         _tiles = new Dictionary<Vector2Int, Tile>();
         foreach (var tile in GetComponentsInChildren<Tile>())
@@ -42,5 +43,15 @@ public class GridManager : MonoBehaviour
     public Dictionary<Vector2Int, Tile> GetTiles()
     {
         return _tiles;
+    }
+
+    public List<Tile> GetFreeBottomRowTiles()
+    {
+        return _tiles
+            .Where(t => t.Key.y == 0)
+            .Where(t => !t.Value.blocked)
+            .OrderBy(t => t.Key.x)
+            .Select(t => t.Value)
+            .ToList();
     }
 }

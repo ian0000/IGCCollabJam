@@ -6,7 +6,7 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     public Vector2Int coords;
-    public bool isBlocked = false;
+    public bool blocked = false;
 
     [SerializeField] LayerMask layerMask;
 
@@ -22,12 +22,11 @@ public class Tile : MonoBehaviour
         return _boxCollider.bounds.Contains(pos);
     }
 
-// TODO: Not triggering
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (LayerInMask(collider.gameObject.layer, layerMask))
         {
-            isBlocked = true;
+            blocked = true;
         }
     }
 
@@ -35,7 +34,7 @@ public class Tile : MonoBehaviour
     {
         if (LayerInMask(collider.gameObject.layer, layerMask))
         {
-            isBlocked = false;
+            blocked = false;
         }
     }
 

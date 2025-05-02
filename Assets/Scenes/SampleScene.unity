@@ -1760,7 +1760,7 @@ GameObject:
   - component: {fileID: 677619566}
   - component: {fileID: 677619565}
   m_Layer: 0
-  m_Name: BeanStalk
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2899,15 +2899,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd71001c4cd46ae4fb2fc2a18537a866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesPerTurns:
-  - Enemy:
-    - _unitMaxCount: 2
-      _unitMaxATK: 10
-      _unitMaxHP: 5
-      _stepsPerTurn: 4
-      _unitObject: {fileID: 2118961737700493720, guid: 6f046faea55f57b48978316ea18ebf0f, type: 3}
-    turn: 0
-  _gridManager: {fileID: 1385043777}
+  _unitMaxCount: 2
+  _enemyPrefab: {fileID: 2516570485374334444, guid: 6f046faea55f57b48978316ea18ebf0f, type: 3}
 --- !u!114 &1050183901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2920,7 +2913,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c18dc6f6b92e084e8d3053ff90dc6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemies: []
 --- !u!82 &1050183902
 AudioSource:
   m_ObjectHideFlags: 0

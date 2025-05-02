@@ -34,7 +34,7 @@ public class Pathfinder
             foreach (var neighbor in GetNeighbors(current.Position))
             {
                 if (closedList.Contains(neighbor)) continue;
-                if (!_tiles.ContainsKey(neighbor) || _tiles[neighbor].isBlocked) continue;
+                if (!_tiles.ContainsKey(neighbor) || _tiles[neighbor].blocked) continue;
 
                 float g = current.G + 1;
                 float h = Vector2.Distance(neighbor, goal);
@@ -82,8 +82,8 @@ public class Pathfinder
         int maxY = (int)_tiles.Keys.Max(v => v.y);
         int minY = (int)_tiles.Keys.Min(v => v.y);
 
-        var starts = _tiles.Keys.Where(v => v.y == minY && !_tiles[v].isBlocked);
-        var goals = _tiles.Keys.Where(v => v.y == maxY && !_tiles[v].isBlocked);
+        var starts = _tiles.Keys.Where(v => v.y == minY && !_tiles[v].blocked);
+        var goals = _tiles.Keys.Where(v => v.y == maxY && !_tiles[v].blocked);
 
         List<Vector2Int> shortestPath = null;
 

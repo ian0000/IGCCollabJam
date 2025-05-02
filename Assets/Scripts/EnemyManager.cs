@@ -6,8 +6,8 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance;
 
-    public List<EnemyController> _enemies = new List<EnemyController>();
-    private bool _isProcessing = false;
+    List<EnemyController> _enemies = new List<EnemyController>();
+
     void Awake()
     {
         if (Instance == null) Instance = this;
@@ -16,9 +16,9 @@ public class EnemyManager : MonoBehaviour
 
     public void MoveAllEnemies()
     {
-        if (!_isProcessing)
-            StartCoroutine(MoveEnemiesSequentially());
+        StartCoroutine(MoveEnemiesSequentially());
     }
+
     public void RegisterEnemy(EnemyController enemy)
     {
         if (!_enemies.Contains(enemy))
@@ -26,18 +26,14 @@ public class EnemyManager : MonoBehaviour
             _enemies.Add(enemy);
         }
     }
+
     private IEnumerator MoveEnemiesSequentially()
     {
-        _isProcessing = true;
-
         foreach (var enemy in _enemies)
         {
-            yield return enemy.ContinueMovementCoroutine(); // 👈 wait until this enemy finishes
+            yield return enemy.MoveChunk(); // 👈 wait until this enemy finishes
             yield return new WaitForSeconds(0.2f); // optional delay between each
         }
-
-        _isProcessing = false;
         GameManager.Instance.ChangeState(GameState.PlayerTurn);
     }
-
 }
