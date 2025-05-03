@@ -1,21 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public Vector2Int currentTilePos;
+    public Tile currentTile;
     [SerializeField] float _moveSpeed = 2f;
     [SerializeField] int _stepsPerMove = 2;
     List<Vector2Int> _currentPath;
-    int _currentPathIndex;
     bool _isMoving = false;
-
-    public void Init(Vector2Int startPosition)
-    {
-        currentTilePos = startPosition;
-    }
 
     void Start()
     {
@@ -28,46 +23,35 @@ public class EnemyController : MonoBehaviour
 
     public IEnumerator MoveChunk()
     {
-        yield return WaitThenMove(); // just yield the internal coroutine
+        yield return Move(); // just yield the internal coroutine
     }
 
-    IEnumerator WaitThenMove()
+    IEnumerator Move()
     {
-        yield return new WaitForSeconds(1f);
-
-        // Recalculate path from current position to bottom row
-        var tiles = GridManager.Instance.GetTiles();
-        var pathfinder = new Pathfinder(tiles);
-        var newPath = FindTopToBottomPathFrom(currentTilePos, pathfinder, tiles);
-        if (newPath != null && newPath.Count > 0)
+        // Calculate path from current position to top row
+        var newPath = FindPathToTop();
+        if (newPath?.Count > 0)
         {
-            _currentPath = newPath;
-            _currentPathIndex = 0;
+            int steps = Mathf.Min(_stepsPerMove, newPath.Count);
+            var pathChunk = newPath.GetRange(0, steps);
 
-            int steps = Mathf.Min(_stepsPerMove, _currentPath.Count);
-            var pathChunk = _currentPath.GetRange(_currentPathIndex, steps);
-            _currentPathIndex += steps;
-
-            yield return FollowPathChunk(pathChunk);
+            yield return FollowPath(pathChunk);
         }
-        else
-        {
-            Debug.LogWarning("No valid path found after rechecking.");
-        }
+        Debug.LogWarning("No valid path found after rechecking.");
     }
 
-    List<Vector2Int> FindTopToBottomPathFrom(Vector2Int start, Pathfinder pathfinder, Dictionary<Vector2Int, Tile> tiles)
+    /// <summary>
+    /// Finds the shortest path to a free top tile.
+    /// </summary>
+    /// <returns>Shortest tile path (see PathFinder.FindPath for more info on tile path).</returns>
+    List<Tile> FindPathToTop()
     {
-        int maxY = tiles.Keys.Max(v => v.y);
-
-        var goals = tiles.Keys.Where(v => v.y == maxY && !tiles[v].blocked);
-
-        List<Vector2Int> shortestPath = null;
-
-        foreach (var goal in goals)
+        var topTiles = GridManager.Instance.GetFreeTopRowTiles();
+        List<Tile> shortestPath = null;
+        foreach (var top in topTiles)
         {
-            var path = pathfinder.FindPath(start, goal);
-            if (path != null && (shortestPath == null || path.Count < shortestPath.Count))
+            var path = PathFinder.FindPath(currentTile, top);
+            if (shortestPath == null || path?.Count < shortestPath.Count)
             {
                 shortestPath = path;
             }
@@ -76,80 +60,35 @@ public class EnemyController : MonoBehaviour
         return shortestPath;
     }
 
-    IEnumerator FollowPathChunk(List<Vector2Int> pathChunk)
+    IEnumerator FollowPath(List<Tile> path)
     {
 
-        foreach (var pos in pathChunk)
+        foreach (var tile in path)
         {
-            MoveTo(pos);
+            MoveTo(tile);
             while (_isMoving) yield return null;
         }
     }
 
-    void MoveTo(Vector2Int targetTilePos)
+    void MoveTo(Tile tile)
     {
         if (_isMoving) return;
-
-        Tile tile = GridManager.Instance.GetTileAtPosition(targetTilePos);
-        StartCoroutine(MoveToTile(tile.transform.position, targetTilePos));
+        StartCoroutine(MoveToTile(tile));
     }
 
-    IEnumerator MoveToTile(Vector3 targetPos, Vector2Int targetTilePos)
+    IEnumerator MoveToTile(Tile tile)
     {
         _isMoving = true;
 
-        while (Vector3.Distance(transform.position, targetPos) > 0.01f)
+        while (Vector2.Distance(transform.position, tile.transform.position) > 0.01f)
         {
-            gameObject.transform.position = Vector3.MoveTowards(transform.position, targetPos, _moveSpeed * Time.deltaTime);
+            gameObject.transform.position = Vector2.MoveTowards(transform.position, tile.transform.position, _moveSpeed * Time.deltaTime);
             yield return null;
         }
 
-        gameObject.transform.position = targetPos;
-        currentTilePos = targetTilePos;
+        gameObject.transform.position = tile.transform.position;
+        currentTile = tile;
 
         _isMoving = false;
-    }
-
-    List<Vector2Int> FindTopToBottomPath(Pathfinder pathfinder, Dictionary<Vector2Int, Tile> tiles)
-    {
-        int maxY = tiles.Keys.Max(v => v.y);
-        int minY = tiles.Keys.Min(v => v.y);
-
-        var starts = tiles.Keys.Where(v => v.y == minY && !tiles[v].blocked);
-        var goals = tiles.Keys.Where(v => v.y == maxY && !tiles[v].blocked);
-
-        List<Vector2Int> shortestPath = null;
-
-        foreach (var start in starts)
-        {
-            foreach (var goal in goals)
-            {
-                var path = pathfinder.FindPath(start, goal);
-                if (path != null && (shortestPath == null || path.Count < shortestPath.Count))
-                {
-                    shortestPath = path;
-                }
-            }
-        }
-
-        return shortestPath;
-    }
-
-    // 🆕 Start path from top to bottom and pause after first chunk
-    public void MoveFromTopToBottom()
-    {
-        var tiles = GridManager.Instance.GetTiles();
-        var pathfinder = new Pathfinder(tiles);
-        var path = FindTopToBottomPath(pathfinder, tiles);
-
-        if (path != null)
-        {
-            _currentPath = path;
-            _currentPathIndex = 0;
-        }
-        else
-        {
-            Debug.LogWarning("No valid path from top to bottom!");
-        }
     }
 }

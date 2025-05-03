@@ -42,10 +42,4 @@ public class Tile : MonoBehaviour
     {
         return (layerMask.value & (1 << layer)) > 0;
     }
-
-    // private void OnDrawGizmosSelected()
-    // {
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawWireSphere(transform.position, 0.5f); // This draws the area being checked
-    // }
 }

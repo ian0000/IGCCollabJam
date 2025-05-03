@@ -17,7 +17,7 @@ public class EnemySpawn : MonoBehaviour
             var tile = freeTiles[Random.Range(0, freeTiles.Count)];
             freeTiles.Remove(tile);
             var enemy = Instantiate(_enemyPrefab, tile.transform.position, Quaternion.identity);
-            enemy.currentTilePos = tile.coords;
+            enemy.currentTile = tile;
         }
 
         GameManager.Instance.ChangeState(GameState.PlayCards);

@@ -1,105 +1,85 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Pathfinder
+public class PathFinder
 {
-    private Dictionary<Vector2Int, Tile> _tiles;
-
-    public Pathfinder(Dictionary<Vector2Int, Tile> tiles)
+    class Node
     {
-        _tiles = tiles;
+        public Tile tile;
+        public int startDistance;
+        public int endDistance;
+        public int totalDistance => startDistance + endDistance;
+        public Node prevNode;
     }
 
-    public List<Vector2Int> FindPath(Vector2Int start, Vector2Int goal)
+    /// <summary>
+    /// Find path between tiles using A* using Manhattan distance.
+    /// </summary>
+    /// <param name="start">Start tile</param>
+    /// <param name="goal">Target tile</param>
+    /// <returns>Shortest list of tiles to the goal tile. List is in order from the start tile (exclusive) to the goal tile (inclusive).</returns>
+    public static List<Tile> FindPath(Tile start, Tile goal)
     {
-        var openList = new List<Node>();
-        var closedList = new HashSet<Vector2Int>();
-
-        openList.Add(new Node(start, null, 0, Vector2Int.Distance(start, goal)));
+        var openList = new List<Node> { new Node { tile = start, startDistance = 0 } };
 
         while (openList.Count > 0)
         {
-            var current = openList.OrderBy(n => n.F).First();
-            if (current.Position == goal)
-            {
-                return ReconstructPath(current);
-            }
-
+            // Choose shortest path to check first
+            var current = openList.OrderBy(n => n.totalDistance).First();
             openList.Remove(current);
-            closedList.Add(current.Position);
 
-            foreach (var neighbor in GetNeighbors(current.Position))
+            // Get neighbors that aren't blocked and aren't where you just came from
+            var freeNeighbors = GridManager.Instance.GetNeighbors(current.tile)
+                .Where(t => !t.blocked)
+                .Where(t => t != current.prevNode?.tile);
+            foreach (var neighbor in freeNeighbors)
             {
-                if (closedList.Contains(neighbor)) continue;
-                if (!_tiles.ContainsKey(neighbor) || _tiles[neighbor].blocked) continue;
-
-                float g = current.G + 1;
-                float h = Vector2.Distance(neighbor, goal);
-
-                var existing = openList.FirstOrDefault(n => n.Position == neighbor);
-                if (existing == null)
+                var node = new Node
                 {
-                    openList.Add(new Node(neighbor, current, g, h));
+                    tile = neighbor,
+                    startDistance = current.startDistance + 1,
+                    endDistance = CalculateDistance(neighbor.coords, goal.coords),
+                    prevNode = current,
+                };
+
+                // If goal reached, stop searching
+                if (node.tile == goal)
+                    return ReconstructPath(node);
+
+                var existingNode = openList.SingleOrDefault(n => n.tile == node.tile);
+                // If not already in openList, add it
+                if (existingNode == null)
+                {
+                    openList.Add(node);
                 }
-                else if (g < existing.G)
+                // If already in openList but with longer distance, replace existing node with this node
+                else if (existingNode.totalDistance > node.totalDistance)
                 {
-                    existing.G = g;
-                    existing.Parent = current;
+                    openList.Remove(existingNode);
+                    openList.Add(node);
                 }
             }
         }
-
         return null; // No path
     }
 
-    private List<Vector2Int> ReconstructPath(Node node)
+    // Manhattan distance between two positions
+    public static int CalculateDistance(Vector2Int from, Vector2Int to)
     {
-        var path = new List<Vector2Int>();
-        while (node != null)
+        return Mathf.Abs(to.x - from.x) + Mathf.Abs(to.y - from.y);
+    }
+
+    // Return the Node's prevNode path in List form
+    static List<Tile> ReconstructPath(Node node)
+    {
+        var path = new List<Tile>();
+        while (node.prevNode != null)
         {
-            path.Add(node.Position);
-            node = node.Parent;
+            path.Add(node.tile);
+            node = node.prevNode;
         }
         path.Reverse();
         return path;
     }
-
-    private List<Vector2Int> GetNeighbors(Vector2Int pos)
-    {
-        return new List<Vector2Int>
-        {
-            pos + Vector2Int.up,
-            pos + Vector2Int.down,
-            pos + Vector2Int.left,
-            pos + Vector2Int.right
-        };
-    }
-    public List<Vector2Int> FindTopToBottomPath()
-    {
-        int maxY = (int)_tiles.Keys.Max(v => v.y);
-        int minY = (int)_tiles.Keys.Min(v => v.y);
-
-        var starts = _tiles.Keys.Where(v => v.y == minY && !_tiles[v].blocked);
-        var goals = _tiles.Keys.Where(v => v.y == maxY && !_tiles[v].blocked);
-
-        List<Vector2Int> shortestPath = null;
-
-        foreach (var start in starts)
-        {
-            foreach (var goal in goals)
-            {
-                var path = FindPath(start, goal);
-                if (path != null && (shortestPath == null || path.Count < shortestPath.Count))
-                {
-                    shortestPath = path;
-                }
-            }
-        }
-
-        return shortestPath;
-    }
-
 }
