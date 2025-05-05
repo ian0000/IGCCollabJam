@@ -22,6 +22,7 @@ public class PathFinder
     public static List<Tile> FindPath(Tile start, Tile goal)
     {
         var openList = new List<Node> { new Node { tile = start, startDistance = 0 } };
+        var tileNodes = new Dictionary<Tile, Node>();
 
         while (openList.Count > 0)
         {
@@ -47,17 +48,12 @@ public class PathFinder
                 if (node.tile == goal)
                     return ReconstructPath(node);
 
-                var existingNode = openList.SingleOrDefault(n => n.tile == node.tile);
-                // If not already in openList, add it
-                if (existingNode == null)
+                // If new node, or if this node is better than the tracked node at this tile, track it
+                if (!tileNodes.Keys.Contains(neighbor) || tileNodes[neighbor].startDistance > node.startDistance)
                 {
-                    openList.Add(node);
-                }
-                // If already in openList but with longer distance, replace existing node with this node
-                else if (existingNode.totalDistance > node.totalDistance)
-                {
-                    openList.Remove(existingNode);
-                    openList.Add(node);
+                    tileNodes[neighbor] = node;
+                    if (!openList.Contains(node))
+                        openList.Add(node);
                 }
             }
         }

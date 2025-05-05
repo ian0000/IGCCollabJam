@@ -52,13 +52,19 @@ public class GameManager : MonoBehaviour
                 turnStarted?.Invoke();
                 break;
 
-            case GameState.EnemyTurn:
-                Debug.Log("Enemies move and attack.");
+            case GameState.EnemyMovement:
+                Debug.Log("Enemies moving.");
                 EnemyManager.Instance.MoveAllEnemies();
                 break;
             
-            case GameState.PlayerTurn:
-                Debug.Log("Player entities attack.");
+            case GameState.EnemyAttack:
+                Debug.Log("Enemies attacking.");
+                // TODO: Call enemy attacking processes and move this state change to the end of it
+                ChangeState(GameState.PlayerAttack);
+                break;
+            
+            case GameState.PlayerAttack:
+                Debug.Log("Player entities attacking.");
                 // TODO: Call player attacking processes and move this state change to the end of it
                 ChangeState(GameState.EndTurn);
                 break;
@@ -66,6 +72,9 @@ public class GameManager : MonoBehaviour
             case GameState.EndTurn:
                 turnEnded?.Invoke();
                 currentTurn++;
+                // TODO: Added this here to close loop, but we may have some kind of coroutine
+                // to handle end turn behavior and create delay before next draw phase
+                ChangeState(GameState.PlayerDrawCards);
                 break;
 
             case GameState.Victory:
@@ -87,8 +96,9 @@ public enum GameState
     PlayerDrawCards,
     EnemySpawnUnits,
     PlayCards,
-    EnemyTurn,
-    PlayerTurn,
+    EnemyMovement,
+    EnemyAttack,
+    PlayerAttack,
     EndTurn,
     Victory,
     Lose

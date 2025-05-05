@@ -34,6 +34,6 @@ public class EnemyManager : MonoBehaviour
             yield return enemy.MoveChunk(); // 👈 wait until this enemy finishes
             yield return new WaitForSeconds(0.2f); // optional delay between each
         }
-        GameManager.Instance.ChangeState(GameState.PlayerTurn);
+        GameManager.Instance.ChangeState(GameState.EnemyAttack);
     }
 }

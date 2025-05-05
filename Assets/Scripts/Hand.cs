@@ -42,7 +42,7 @@ public class Hand : MonoBehaviour
             _discardArea.SetActive(false);
             _endTurnButton.gameObject.SetActive(false);
             _cards.ForEach(c => c.enabled = false);
-            GameManager.Instance.ChangeState(GameState.EnemyTurn);
+            GameManager.Instance.ChangeState(GameState.EnemyMovement);
         }
     }
 
