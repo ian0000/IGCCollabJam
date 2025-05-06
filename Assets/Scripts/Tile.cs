@@ -6,11 +6,19 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     public Vector2Int coords;
-    public bool blocked = false;
+    public bool Blocked
+    {
+        get { return _occupier != null; }
+    }
+    public GameObject Occupier
+    {
+        get { return _occupier; }
+    }
 
     [SerializeField] LayerMask layerMask;
 
     BoxCollider2D _boxCollider;
+    GameObject _occupier;
 
     void Start()
     {
@@ -24,22 +32,17 @@ public class Tile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (LayerInMask(collider.gameObject.layer, layerMask))
+        if (layerMask.LayerInMask(collider.gameObject.layer))
         {
-            blocked = true;
+            _occupier = collider.gameObject;
         }
     }
 
     void OnTriggerExit2D(Collider2D collider)
     {
-        if (LayerInMask(collider.gameObject.layer, layerMask))
+        if (layerMask.LayerInMask(collider.gameObject.layer))
         {
-            blocked = false;
+            _occupier = null;
         }
-    }
-
-    bool LayerInMask(int layer, LayerMask layerMask)
-    {
-        return (layerMask.value & (1 << layer)) > 0;
     }
 }

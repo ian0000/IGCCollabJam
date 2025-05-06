@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviour
     public Tile currentTile;
     [SerializeField] float _moveSpeed = 2f;
     [SerializeField] int _stepsPerMove = 2;
-    List<Vector2Int> _currentPath;
+    [SerializeField] LayerMask plantLayer;
     bool _isMoving = false;
 
     void Start()
@@ -29,7 +29,7 @@ public class EnemyController : MonoBehaviour
     IEnumerator Move()
     {
         // Calculate path from current position to top row
-        var newPath = FindPathToTop();
+        var newPath = DetermineTarget();
         if (newPath?.Count > 0)
         {
             int steps = Mathf.Min(_stepsPerMove, newPath.Count);
@@ -40,18 +40,30 @@ public class EnemyController : MonoBehaviour
         Debug.LogWarning("No valid path found after rechecking.");
     }
 
-    /// <summary>
-    /// Finds the shortest path to a free top tile.
-    /// </summary>
-    /// <returns>Shortest tile path (see PathFinder.FindPath for more info on tile path).</returns>
-    List<Tile> FindPathToTop()
+    List<Tile> DetermineTarget()
     {
-        var topTiles = GridManager.Instance.GetFreeTopRowTiles();
-        List<Tile> shortestPath = null;
-        foreach (var top in topTiles)
+        var path = ShortestPathTo(GridManager.Instance.GetFreeTopRowTiles());
+        if (path.Count > _stepsPerMove)
         {
-            var path = PathFinder.FindPath(currentTile, top);
-            if (shortestPath == null || path?.Count < shortestPath.Count)
+            var occupiedTiles = GridManager.Instance.GetOccupiedTiles(plantLayer);
+            if (occupiedTiles.Count > 0)
+                path = ShortestPathTo(occupiedTiles);
+        }
+        return path;
+    }
+
+    /// <summary>
+    /// Determines the shortest path to one of the targets and returns a path to it.
+    /// </summary>
+    /// <param name="targets">List of targetted tiles</param>
+    /// <returns>Path to the closest target tile</returns>
+    List<Tile> ShortestPathTo(List<Tile> targets)
+    {
+        List<Tile> shortestPath = null;
+        foreach (var targetTile in targets)
+        {
+            var path = PathFinder.FindPath(currentTile, targetTile);
+            if (shortestPath == null || path.Count < shortestPath.Count)
             {
                 shortestPath = path;
             }

@@ -30,10 +30,9 @@ public class PathFinder
             var current = openList.OrderBy(n => n.totalDistance).First();
             openList.Remove(current);
 
-            // Get neighbors that aren't blocked and aren't where you just came from
+            // Get neighbors that aren't blocked (unless they're the target tile)
             var freeNeighbors = GridManager.Instance.GetNeighbors(current.tile)
-                .Where(t => !t.blocked)
-                .Where(t => t != current.prevNode?.tile);
+                .Where(t => t == goal || !t.Blocked);
             foreach (var neighbor in freeNeighbors)
             {
                 var node = new Node
@@ -46,7 +45,12 @@ public class PathFinder
 
                 // If goal reached, stop searching
                 if (node.tile == goal)
+                {
+                    // If goal node blocked, stop one tile short of it
+                    if (node.tile.Blocked)
+                        return ReconstructPath(node.prevNode);
                     return ReconstructPath(node);
+                }
 
                 // If new node, or if this node is better than the tracked node at this tile, track it
                 if (!tileNodes.Keys.Contains(neighbor) || tileNodes[neighbor].startDistance > node.startDistance)
@@ -57,7 +61,7 @@ public class PathFinder
                 }
             }
         }
-        return null; // No path
+        return new List<Tile>(); // No path, return empty list
     }
 
     // Manhattan distance between two positions

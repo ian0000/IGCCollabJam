@@ -110,7 +110,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
                 Debug.Log("Not enough seeds to play this card.");
                 return;
             }
-            if (tile.blocked)
+            if (tile.Blocked)
             {
                 Debug.Log("Tile already occupided");
                 return;

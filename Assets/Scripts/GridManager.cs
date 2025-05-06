@@ -58,11 +58,20 @@ public class GridManager : MonoBehaviour
             .ToArray();
     }
 
+    public List<Tile> GetOccupiedTiles(LayerMask layerMask)
+    {
+        return _tiles
+            .Where(t => t.Value.Blocked)
+            .Where(t => layerMask.LayerInMask(t.Value.Occupier.layer))
+            .Select(t => t.Value)
+            .ToList();
+    }
+
     public List<Tile> GetFreeBottomRowTiles()
     {
         return _tiles
             .Where(t => t.Key.y == 0)
-            .Where(t => !t.Value.blocked)
+            .Where(t => !t.Value.Blocked)
             .Select(t => t.Value)
             .ToList();
     }
@@ -71,7 +80,7 @@ public class GridManager : MonoBehaviour
     {
         return _tiles
             .Where(t => t.Key.y == maxY)
-            .Where(t => !t.Value.blocked)
+            .Where(t => !t.Value.Blocked)
             .Select(t => t.Value)
             .ToList();
     }
